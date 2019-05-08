@@ -1,4 +1,4 @@
-# Audio transfer learning with Audioset features and Scikit-learn
+# Audio transfer learning with Scikit-learn
 
 We use the VGGish pre-trained model as a feature extractor. It was trained with Audioset, a dataset conformed by 2M YouTube audios that was designed to train general audio tagging models. On top of it, we simply build a scikit-learn classifier to rapidly prototype competent audio classifiers (even, with few training instances).
 
@@ -6,14 +6,14 @@ See the pipeline:
 
 IMAGE
 
+## Setup with an example
+
 #### Installation:
 Create a python 3 virtual environment and install dependencies `pip install -r requirements.txt`
 
 Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu`
 
 Be sure to have `ffmpeg` installed, as well.
-
-## Setup with an example
 
 - **GTZAN fault-filtered version**: download the data [(link)](http://marsyasweb.appspot.com/download/data_sets/). Download the (.txt) files that list which audios are in every partition [(link)](https://github.com/jongpillee/music_dataset_split/tree/master/GTZAN_split). Set the config file: `'train_set_list': 'path/train_audios.txt'`, `'val_set_list': 'path/val_audios.txt'`, `'test_set_list': 'path/test_audios.txt'`, `'audios_list': False`.
 
