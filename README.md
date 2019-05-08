@@ -27,7 +27,7 @@ And run `python sklearn_audioset.py`.
 Note that in line ? one can configure the script, and in lines ? one can set several sklearn classifiers. For example, with this setup we get that ? accuracy. 
 
 
-## Scripts
+## Scripts directory
 - `knn_audioset.py`: run it to reproduce our nearest-neigbour Audioset results.
 - `knn_mfcc.py`: run it to reproduce our nearest-neigbour MFCCs results.
 - `shared.py`: auxiliar script with shared functions that are used by other scripts.
