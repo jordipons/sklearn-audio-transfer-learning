@@ -1,19 +1,10 @@
-# Audio transfer learning with scikit-learn
+# Audio transfer learning with Audioset features and Scikit-learn
 
-Blablablab
+We use the VGGish pre-trained model as a feature extractor. It was trained with Audioset, a dataset conformed by 2M YouTube audios that was designed to train general audio tagging models. On top of it, we simply build a scikit-learn classifier to rapidly prototype competent audio classifiers (even, with few training instances).
 
-IMATGE
+See the pipeline:
 
-Blablabla.
-
-
-
-## Setup with an example
-
-- **GTZAN fault-filtered version**: download the data [(link)](http://marsyasweb.appspot.com/download/data_sets/). Download the (.txt) files that list which audios are in every partition [(link)](https://github.com/jongpillee/music_dataset_split/tree/master/GTZAN_split). Set the config file: `'train_set_list': 'path/train_audios.txt'`, `'val_set_list': 'path/val_audios.txt'`, `'test_set_list': 'path/test_audios.txt'`, `'audios_list': False`.
-
-#### Download the data:
-Download [US8K dataset](https://urbansounddataset.weebly.com/urbansound8k.html), and ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)).
+IMAGE
 
 #### Installation:
 Create a python 3 virtual environment and install dependencies `pip install -r requirements.txt`
@@ -21,6 +12,13 @@ Create a python 3 virtual environment and install dependencies `pip install -r r
 Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu`
 
 Be sure to have `ffmpeg` installed, as well.
+
+## Setup with an example
+
+- **GTZAN fault-filtered version**: download the data [(link)](http://marsyasweb.appspot.com/download/data_sets/). Download the (.txt) files that list which audios are in every partition [(link)](https://github.com/jongpillee/music_dataset_split/tree/master/GTZAN_split). Set the config file: `'train_set_list': 'path/train_audios.txt'`, `'val_set_list': 'path/val_audios.txt'`, `'test_set_list': 'path/test_audios.txt'`, `'audios_list': False`.
+
+## Additional datasets:
+Download [US8K dataset](https://urbansounddataset.weebly.com/urbansound8k.html), and ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)).
 
 #### Preprocess the data:
 To preprocess the data, first set some `config_file.py` variables:
