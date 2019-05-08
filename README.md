@@ -13,7 +13,7 @@ Download the pre-trained model `wget https://storage.googleapis.com/audioset/vgg
 
 ## Music genre classification: a toy example
 
-#### Set up the task
+#### Setup the task
 As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz` and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour. We already provide (fault-filtered) train/test partitions in `sklearn-audio-transfer-learning/data/index/GTZAN/`.
 
 `sklearn_audioset.py` is the main python file. Note that in its top-20 lines you can configure it. It is important that you set your data folder, in my case: `DATA_FOLDER = '/home/jordipons/transfer-learning-tutorial/data/'`.
@@ -25,7 +25,8 @@ Open `sklearn-audio-transfer-learning/src/` directory in a terminal and run `pyt
 
 Congrats, you have build a music genre classifier! The model we developed achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and is quite competent when compared to the best result we are aware of [(82.1%)](https://www.mdpi.com/2076-3417/8/1/150).
 
-Can you improve this result? Feel free to modify this code. It is meant for that! Keep us updated if you break the state-of-the-art ;)
+Can you improve this result? Feel free to modify this code. It is meant for that! 
+Keep us updated if you break the state-of-the-art ;)
 
 ## Scripts directory
 - `sklearn_audioset.py`: main script where we build the audio classifiers with Audioset features and Scikit-learn.
@@ -41,7 +42,3 @@ Can you improve this result? Feel free to modify this code. It is meant for that
 When running previous scripts, the following folders will be created:
 - `./data/audio_representation/`: where the training Audioset features are stored.
 - `./data/experiments/`: where the results of the experiments are stored.
-
-## TODO:
-- Store the results.
-- License.
