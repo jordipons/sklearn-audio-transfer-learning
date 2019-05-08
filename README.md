@@ -4,7 +4,7 @@ We use the [VGGish pre-trained model](https://github.com/tensorflow/models/tree/
 
 See the pipeline:
 
-This material is prepared to learn about tensorflow, scikit-learn, and deep learning in general. Besides, due to the simplicity of scikit-learn, this toolkit can be employed to easily build proof-of-concept models from even small training sets. See this [article](https://arxiv.org/abs/1810.10274) to know more on using transfer learning in low-data regimes. 
+This material is prepared to learn about tensorflow, scikit-learn, and deep learning in general. Besides, due to the simplicity of scikit-learn, this toolkit can be employed to easily build proof-of-concept models from small training sets. See this [article](https://arxiv.org/abs/1810.10274) to know more on using transfer learning in low-data regimes. 
 
 ## Installation:
 Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate` and install the dependencies `pip install -r requirements.txt`.
