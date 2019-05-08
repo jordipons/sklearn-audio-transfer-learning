@@ -25,8 +25,22 @@ Open `sklearn-audio-transfer-learning/src/` directory in a terminal and run `pyt
 
 Congrats, you have build a music genre classifier! The model we developed achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and is quite competent when compared to the best result we are aware of [(82.1%)](https://www.mdpi.com/2076-3417/8/1/150).
 
-Can you improve this result? Feel free to modify this code. It is meant for that! 
+#### Can you improve this result? 
+
+Feel free to modify this code. It is meant for that! 
 Keep us updated if you break the state-of-the-art ;)
+
+EXPLAIN HOW TO DO IT, SOME CONFIG TIPS.
+
+Does not fit into memory?
+    'train_batch': 8,
+    'test_batch': 8,
+    
+Change the model?
+    'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
+    
+Go faster?
+    'load_training_data': 'training_data_GTZAN_8643.npz' # False or load a model: 'training_data_GTZAN_839.npz'
 
 ## Scripts directory
 - `sklearn_audioset.py`: main script where we build the audio classifiers with Audioset features and Scikit-learn.
