@@ -27,3 +27,9 @@ Ideas:
 - visualize stuff
 
 - https://scikit-learn.org/stable/modules/model_persistence.html
+
+
+## Additional information:
+This material was prepared as a didactic intentions. Interested students, might be interested in 
+
+Download [US8K dataset](https://urbansounddataset.weebly.com/urbansound8k.html), and ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)).
