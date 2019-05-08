@@ -6,9 +6,7 @@ See the pipeline:
 
 IMAGE
 
-## Setup with an example
-
-#### Installation:
+## Installation:
 Create a python 3 virtual environment and install dependencies `pip install -r requirements.txt`
 
 Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu`
@@ -18,13 +16,15 @@ Be sure to have `ffmpeg` installed, as well.
 #### Download the the VGGish model:
 Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
 
+## A toy example: genre classification
+
 #### Download the data:
 
 As an example, let's download the **GTZAN** dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz`and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`.
 
-#### Download the the VGGish model:
-Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
+And run `python sklearn_audioset.py`.
 
+Note that in line ? one can configure the script, and in lines ? one can set several sklearn classifiers. For example, with this setup we get that ? accuracy. 
 
 
 ## Scripts
@@ -36,7 +36,6 @@ Download the pre-trained model `wget https://storage.googleapis.com/audioset/vgg
 ## Folders structure
 
 - `/src`: folder containing previous scripts.
-- `/aux`: folder containing auxiliar additional scripts. These are used to generate the index files in `/data/index/`.
 - `/data`: where all intermediate files (spectrograms, results, etc.) will be stored. 
 - `/data/index/`: indexed files containing the correspondences between audio files and their ground truth.
 
@@ -45,7 +44,9 @@ When running previous scripts, the following folders will be created:
 - `./data/experiments/`: where the results of the experiments are stored.
 
 
-## Additional datasets:
+## Additional information:
+This material was prepared with didactic intentions. Interested students, might be interested in 
+
 Download [US8K dataset](https://urbansounddataset.weebly.com/urbansound8k.html), and ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)).
 
 
