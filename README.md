@@ -12,15 +12,20 @@ Create a python3 virtual environment `python3 -m venv env`, activate it `source 
 Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
 
 ## Music genre classification: a toy example
+
+#### Set up the task
 As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz` and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour. We already provide (fault-filtered) train/test partitions in `sklearn-audio-transfer-learning/data/index/GTZAN/`.
 
 `sklearn_audioset.py` is the main python file. Note that in its top-20 lines you can configure it. It is important that you set your data folder, in my case: `DATA_FOLDER = '/home/jordipons/transfer-learning-tutorial/data/'`.
 
 You can also set some parameters. For example, you can select which sklearn classifier to employ. Sklearn has tones of possibilities! You can easily set your favourite sklearn classifier in `define_classification_model()`. To start, let's select 'linearSVM'. We set it as follows: `LinearSVC(C=1)`.
 
+#### Run your classifier
 Now, run `python src/sklearn_audioset.py` on your CPU.
 
 Congrats, you have build a music genre classifier! The model we developed achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and is quite competent when compared to the best result we are aware of [(82.1%)](https://www.mdpi.com/2076-3417/8/1/150).
+
+Can you improve this result? Feel free to modify this code. It is meant for that! Keep us updated if you break the state-of-the-art ;)
 
 ## Scripts directory
 - `sklearn_audioset.py`: main script where we build the audio classifiers with Audioset features and Scikit-learn.
@@ -39,4 +44,4 @@ When running previous scripts, the following folders will be created:
 
 ## TODO:
 - Store the results.
-- License
+- License.
