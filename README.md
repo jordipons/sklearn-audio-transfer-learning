@@ -1,4 +1,4 @@
-# Audio transfer learning with Scikit-learn
+# Audio Transfer Learning with Scikit-learn
 
 We use the [VGGish pre-trained model](https://github.com/tensorflow/models/tree/master/research/audioset) as a feature extractor. It was trained with Audioset, a dataset conformed by 2M YouTube audios that was designed to train general audio tagging models. On top of it, we simply build a scikit-learn classifier to rapidly prototype competent audio classifiers (even, with few training instances).
 
@@ -26,6 +26,7 @@ And run `python sklearn_audioset.py`.
 
 Note that in line ? one can configure the script, and in lines ? one can set several sklearn classifiers. For example, with this setup we get that ? accuracy. 
 
+This can be run in a CPU. Didactic porpuses.
 
 ## Scripts directory
 - `knn_audioset.py`: run it to reproduce our nearest-neigbour Audioset results.
