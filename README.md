@@ -1,17 +1,13 @@
 # Audio Transfer Learning with Scikit-learn
 
-We use the [VGGish pre-trained model](https://github.com/tensorflow/models/tree/master/research/audioset) as a feature extractor. It was trained with Audioset, a dataset conformed by 2M YouTube audios that was designed to train general audio tagging models. On top of it, we simply build a scikit-learn classifier to rapidly prototype competent audio classifiers (even, with few training instances).
+We use the [VGGish pre-trained model](https://github.com/tensorflow/models/tree/master/research/audioset) as a feature extractor. This was trained with [Audioset dataset](https://research.google.com/audioset/), that is conformed by 2M YouTube audios for the task of general audio tagging. Scikit-learn classifiers are employed to rapidly prototype competent audio classifiers that can be trained on CPU.
 
 See the pipeline:
 
-IMAGE
+This material is prepared to learn about tensorflow, scikit-learn, and deep learning in general. Besides, due to the simplicity of scikit-learn, this toolkit can be employed to easily build proof-of-concept models from even small training sets. See this [article](https://arxiv.org/abs/1810.10274) to know more on using transfer learning in low-data regimes. 
 
 ## Installation:
-Create a python 3 virtual environment and install dependencies `pip install -r requirements.txt`
-
-Install tensorflow for CPU `pip install tensorflow` or for CUDA-enabled GPU `pip install tensorflow-gpu`
-
-Be sure to have `ffmpeg` installed, as well.
+Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate` and install the dependencies `pip install -r requirements.txt`.
 
 #### Download the the VGGish model:
 Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
