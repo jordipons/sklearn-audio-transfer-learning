@@ -18,7 +18,7 @@ config = {
     'train_batch': 8,
     'test_batch': 8,
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
-    'load_training_data': False # False or load a model: 'training_data_GTZAN_839.npz'
+    'load_training_data': 'training_data_GTZAN_8643.npz' # False or load a model: 'training_data_GTZAN_839.npz'
 }
 
 def define_classification_model():
@@ -170,7 +170,19 @@ if __name__ == '__main__':
         y_pred.append(np.argmax(np.bincount(pred[np.where(identifiers==pt)]))) # majority voting
         y_true.append(int(path2gt_test[pt]))
 
+    # print and store the results
+    conf_matrix = confusion_matrix(y_true, y_pred)
+    acc = accuracy_score(y_true, y_pred)
+    experiments_folder = DATA_FOLDER + 'experiments/'
+    if not os.path.exists(experiments_folder):
+        os.makedirs(experiments_folder)
+    results_file_name = 'results_' + str(config['dataset']) + '_' +  str(random.randint(0,10000)) + '.txt'
+    to = open(experiments_folder + results_file_name, 'w')
+    to.write(str(config) + '\n')
+    to.write(str(conf_matrix) + '\n')
+    to.write('Accuracy: ' + str(acc))
+    to.close()
     print(config)
-    print(confusion_matrix(y_true, y_pred))    
-    print('Accuracy: ' + str(accuracy_score(y_true, y_pred)))
+    print(conf_matrix)    
+    print('Accuracy: ' + str(acc))
 
