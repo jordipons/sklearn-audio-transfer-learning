@@ -1,10 +1,10 @@
 # Audio Transfer Learning with Scikit-learn and Tensorflow
 
-We use the [VGGish pre-trained model](https://github.com/tensorflow/models/tree/master/research/audioset) as a feature extractor. This was trained with [Audioset dataset](https://research.google.com/audioset/), that is conformed by 2M YouTube audios for the task of general audio tagging. Scikit-learn classifiers are employed to rapidly prototype competent audio classifiers that can be trained on CPU.
+We use the [VGGish pre-trained model](https://github.com/tensorflow/models/tree/master/research/audioset) as an audio feature extractor. This deep convolutional neural network was trained with the [Audioset dataset](https://research.google.com/audioset/), that is conformed by 2M YouTube audios for the task of general audio tagging. Scikit-learn classifiers written in python are employed to rapidly prototype competent audio classifiers that can be trained on a CPU.
 
 See the pipeline:
 
-This material is prepared to learn about tensorflow, scikit-learn, and deep learning in general. Besides, due to the simplicity of scikit-learn, this toolkit can be employed to easily build proof-of-concept models from small training sets. See this [article](https://arxiv.org/abs/1810.10274) to know more on using transfer learning in low-data regimes. 
+This material is prepared to learn about tensorflow, scikit-learn, and deep learning in general. Besides, due to the simplicity of scikit-learn, this toolkit can be employed to easily build proof-of-concept models from small training sets. See this [article](https://arxiv.org/abs/1810.10274) to know more on using audio transfer learning in low-data regimes. 
 
 ## Installation:
 Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate` and install the dependencies `pip install -r requirements.txt`.
@@ -12,17 +12,19 @@ Create a python3 virtual environment `python3 -m venv env`, activate it `source 
 #### Download the the VGGish model:
 Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
 
-## A toy example: genre classification
+## Music genre classification: a toy example
 
 #### Download the data:
 
-As an example, let's download the **GTZAN** dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz`and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`.
+As an example, let's download the **GTZAN** dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz`and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour.
 
-And run `python sklearn_audioset.py`.
+`sklearn_audioset.py` is the main python file. You can configure it in its top-20 lines. It is important that you set your data folder, in my case: `DATA_FOLDER = '/home/idrojsnop/transfer-learning-tutorial/data/'`. 
 
-Note that in line ? one can configure the script, and in lines ? one can set several sklearn classifiers. For example, with this setup we get that ? accuracy. 
+Below, you can also set some parameters. For example, you can select which sklearn models to employ: 'linearSVM', 'SVM', 'MLP', or 'kNN'. But sklearn has tones of possibilities! For that reason, you can easily set your sklearn classifiers in `define_classification_model()`. To start, let's select 'linearSVM' set as follows: `LinearSVC(C=1)`.
 
-This can be run in a CPU. Didactic porpuses.
+Now, run `python src/sklearn_audioset.py` on your CPU.
+
+Congrats! You now know how to build a music genre classifier. The model we developed achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM (53.44%)](https://arxiv.org/abs/1805.00237), and is quite close to the best result we are aware of (82.1%).
 
 ## Scripts directory
 - `knn_audioset.py`: run it to reproduce our nearest-neigbour Audioset results.

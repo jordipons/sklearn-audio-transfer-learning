@@ -8,7 +8,7 @@ from sklearn.metrics import confusion_matrix
 
 import vggish_input, vggish_slim, vggish_params, utils
 
-DATA_FOLDER = '/home/idrojsnop/Dropbox/Dolby/transfer-learning-tutorial/data/'
+DATA_FOLDER = '/home/idrojsnop/Dropbox/Dolby/sklearn-audio-transfer-learning/data/'
 config = {
     'dataset': 'GTZAN',
     'num_classes_dataset': 10,
@@ -17,8 +17,8 @@ config = {
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'train_batch': 8,
     'test_batch': 8,
-    'model_type': 'perceptron', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
-    'load_training_data': 'training_data_GTZAN_3290.npz' # False or load a model: 'training_data_GTZAN_839.npz'
+    'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
+    'load_training_data': False # False or load a model: 'training_data_GTZAN_839.npz'
 }
 
 def define_classification_model():

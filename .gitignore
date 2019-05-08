@@ -28,3 +28,5 @@ src/__pycache__/*.pyc
 *.au
 *.wav
 *.mp3
+*.tar.gz
+env/

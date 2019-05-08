@@ -24,5 +24,6 @@ Ideas:
 - ensembles
 - discuss random initialization and ensembles
 - discuss overfitting
+- visualize stuff
 
 - https://scikit-learn.org/stable/modules/model_persistence.html
