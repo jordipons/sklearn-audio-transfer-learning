@@ -16,7 +16,7 @@ Download the pre-trained model `wget https://storage.googleapis.com/audioset/vgg
 
 #### Download the data:
 
-As an example, let's download the **GTZAN** dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz`and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour.
+As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz`and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour.
 
 `sklearn_audioset.py` is the main python file. You can configure it in its top-20 lines. It is important that you set your data folder, in my case: `DATA_FOLDER = '/home/idrojsnop/transfer-learning-tutorial/data/'`. 
 
