@@ -58,7 +58,7 @@ To re-compute the features, just set `load_training_data` to False.
     
 #### Does the script consumes too much RAM memory?
 
-Reduce the batch size by properlly setting `train_batch` and `test_batch`. The batch size is the ammount of audios that are processed at once. Hence, the smaller it is, the lower the RAM memory consumption.
+Reduce the batch size by properlly setting `train_batch` and `test_batch`. The batch size defines the ammount of audios that are processed at once. Hence, the smaller it is, the lower the RAM memory consumption.
 
 ## Scripts directory
 - `sklearn_audioset.py`: main script where we build the audio classifiers with Audioset features and Scikit-learn.
