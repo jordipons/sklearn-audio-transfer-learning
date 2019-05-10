@@ -34,29 +34,33 @@ Keep us updated if you break the state-of-the-art ;)
 
 ## I want to build my own audio classifier
 
-In the following, we give some tips on how to build another classifier that is not based on the GTZAN dataset.
+In the following, we give some tips on how to build another audio classifier that is not based on the GTZAN dataset.
 
-As an example on how to do it, let's download the ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)). With this data, we will build an acoustic scene classifier. Are we in a park or in a bus?
+As an example on how to do it, let's download the ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)). With this data, you can build an acoustic scene classifier.
 
-Copy the audio into a new directory in `sklearn-audio-transfer-learning/data/audio/ASC-TUT/`. Now create your train/test partitions. These are just lists of the files that belong to this partition: see the GTZAN example above. For example, access to the your audio directory `sklearn-audio-transfer-learning/data/audio/ASC-TUT/dev-set/` and run `ls > train_set.txt`. Do the same for creating the test partition. Afterwords, remember to configure the variables `'audio_paths_train'` and `'audio_paths_test'` in `sklearn_audioset.py` with the new dataset/partitions.
+Copy the audio into a new audio directory: `sklearn-audio-transfer-learning/data/audio/ASC-TUT/`. Now create your train/test partitions. These are just lists of the files that belong to this partition. For example, access to the your audio directory `sklearn-audio-transfer-learning/data/audio/ASC-TUT/dev-set/` and run `ls > train_set.txt`. Do the same for creating the test partition. Afterwords, remember to configure the variables `'audio_paths_train'` & `'audio_paths_test'` in `sklearn_audioset.py` with the new dataset/partitions.
 
-The last step is to define which is the label (or ground truth) for each of the audios. You can define the correspondence between the audio path and its label in the following function `path2gt_datasets(path, dataset)` in `sklearn-audio-transfer-learning/src/utils.py`.
+The last step is to define which is the label (or ground truth) of each of the audios. You can define the correspondence between the audio path and its label in the following function `path2gt_datasets(path, dataset)` in `sklearn-audio-transfer-learning/src/utils.py`.
 
-You are ready to go.
+You are ready to go!
 
 ## Additional tips
+    
+#### Do you want to experiment with different Scikit-learn models?
 
-Dive into it! This code is readable and well documented.
+You can easily set your favourite sklearn classifier in `define_classification_model()`. Then, select one `'model_type'`. The following ones are already implemented: 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'.
+
+Check [Scikit-learn's documentation](https://scikit-learn.org/stable/) to know more about its possibilities.
     
-Change the model?
-    'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
+#### Does the script takes an eternity to extract the training features?
+
+Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/experiments/`. You can simply load those (instead of re-computing) by setting the variable `'load_training_data'` with the name of the .npz file containing the pre-computed training features (e.g.: 'training_data_GTZAN_8643.npz').
+
+To re-compute the features, just set `'load_training_data':` to False.
     
-Go faster?
-    'load_training_data': 'training_data_GTZAN_8643.npz' # False or load a model: 'training_data_GTZAN_839.npz'
-    
-Does not fit into memory?
-    'train_batch': 8,
-    'test_batch': 8,
+#### Does the script consumes too much RAM memory?
+
+Reduce the batch size by properlly setting `'train_batch':` and `'test_batch'`. The batch size is the ammount of audios that are processed at once. Hence, the smaller it is, the lower the RAM memory consumption.
 
 ## Scripts directory
 - `sklearn_audioset.py`: main script where we build the audio classifiers with Audioset features and Scikit-learn.
