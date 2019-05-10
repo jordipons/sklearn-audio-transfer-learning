@@ -40,9 +40,9 @@ Copy the audio into a new directory in `sklearn-audio-transfer-learning/data/aud
 
 The last step is to define which is the label (or ground truth) for each of the audios. You can define the correspondence between the audio path and its label in the following function `path2gt_datasets(path, dataset)` in `sklearn-audio-transfer-learning/src/utils.py`.
 
-You are ready to go!
+You are ready to go.
 
-#### Additional tips
+## Additional tips
 
 Dive into it! This code is readable and well documented.
     
