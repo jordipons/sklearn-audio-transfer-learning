@@ -30,11 +30,7 @@ Congrats, you have build a music genre classifier! The model we developed achiev
 Feel free to modify this code. It is meant for that! 
 Keep us updated if you break the state-of-the-art ;)
 
-## How can I use this toolkit?
-
-Dive into it! This code is readable and well documented.
-
-#### I want to build my own classifier!
+## I want to build my own classifier!
 
 In the following, we give some tips on how to build another classifier that is not based on the GTZAN dataset.
 
@@ -45,6 +41,10 @@ Copy the audio into a new directory in `sklearn-audio-transfer-learning/data/aud
 The last step is to define which is the label (or ground truth) for each of the audios. You can define the correspondence between the audio path and its label in the following function `path2gt_datasets(path, dataset)` in `sklearn-audio-transfer-learning/src/utils.py`.
 
 You are ready to go!
+
+#### Additional tips
+
+Dive into it! This code is readable and well documented.
     
 Change the model?
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
