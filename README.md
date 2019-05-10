@@ -61,7 +61,7 @@ To re-compute the features, just set `load_training_data` to False.
 Reduce the batch size by properlly setting `train_batch` and `test_batch`. The batch size defines the ammount of audios that are processed at once. The smaller it is, the lower the consumption of RAM memory.
 
 ## Scripts directory
-- `sklearn_audioset.py`: main script where we build the audio classifiers with Audioset features and Scikit-learn.
+- `sklearn_audioset.py`: main script where we build the audio classifiers with VGGish (Tensorflow) features and Scikit-learn.
 - `utils.py`: auxiliar script with util functions that are used by `sklearn_audioset.py`.
 - `vggish_input.py`,`vggish_params.py`,`vggish_slim.py`,`mel_features.py`,`vggish_model.ckpt`: auxiliar scripts to employ the VGGish pre-trained model that delivers the Audioset features.
 
