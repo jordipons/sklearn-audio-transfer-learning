@@ -27,7 +27,7 @@ Congrats, you have build a music genre classifier! The model we developed achiev
 
 #### Can you improve this result? 
 
-Feel free to modify this code. It is meant for that! 
+Feel free to modify our scripts, they are meant for that! 
 Keep us updated if you break the state-of-the-art ;)
 
 ## I want to build my own classifier!
