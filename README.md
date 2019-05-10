@@ -66,7 +66,7 @@ Reduce the batch size by properlly setting `train_batch` and `test_batch`. The b
 - `vggish_input.py`,`vggish_params.py`,`vggish_slim.py`,`mel_features.py`,`vggish_model.ckpt`: auxiliar scripts to employ the VGGish pre-trained model that delivers the Audioset features.
 
 ## Folders structure
-- `/src`: folder containing previous scripts.
+- `/src`: folder containing previously listed scripts.
 - `/data`: where all intermediate files (Audioset features, audio, results, etc.) will be stored. 
 - `/data/index/`: indexed files containing ground truth annotations and partitions.
 - `/data/audio/`: folder where to store the audio datasets.
