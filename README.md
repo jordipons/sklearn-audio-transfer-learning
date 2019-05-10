@@ -3,7 +3,7 @@ We use the [VGGish pre-trained Tensorflow model](https://github.com/tensorflow/m
 
 See the pipeline:
 
-<p align="center"><img src="scikit-learn-audio-transfer-learning.png"></p>
+<p align="center"><img src="sklearn-audio-transfer-learning.png"></p>
 
 This material is prepared to learn about Tensorflow, Scikit-learn, and deep learning in general. Besides, due to the simplicity of scikit-learn, this toolkit can be employed to easily build proof-of-concept models from small training sets. As small (or big!) as your hardware allows! See this [article](https://arxiv.org/abs/1810.10274) to know more on using audio transfer learning in low-data regimes. 
 
