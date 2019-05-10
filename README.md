@@ -52,7 +52,7 @@ You can easily set your favourite sklearn classifier in `define_classification_m
     
 #### Does the script takes an eternity to extract the training features?
 
-Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/experiments/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `training_data_GTZAN_8643.npz`).
+Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `training_data_GTZAN_8643.npz`).
 
 To re-compute the features, just set `load_training_data` to False.
     
@@ -71,6 +71,6 @@ Reduce the batch size by properlly setting `train_batch` and `test_batch`. The b
 - `/data/index/`: indexed files containing ground truth annotations and partitions.
 - `/data/audio/`: folder where to store the audio datasets.
 
-When running previous scripts, the following folders will be created:
+When running our scripts, the following folders will be created:
 - `./data/audio_representation/`: where the training Audioset features are stored.
 - `./data/experiments/`: where the results of the experiments are stored.
