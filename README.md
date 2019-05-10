@@ -15,7 +15,7 @@ Download the pre-trained model `wget https://storage.googleapis.com/audioset/vgg
 
 ## Music genre classification: a toy example
 
-#### Setup the task
+#### Set the task up
 As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz` and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour. We already provide (fault-filtered) train/test partitions in `sklearn-audio-transfer-learning/data/index/GTZAN/`.
 
 `sklearn_audioset.py` is the main python file. Note that on its top-20 lines you can configure it. It is important that you set your data folder, in my case: `DATA_FOLDER = '/home/jordipons/transfer-learning-tutorial/data/'`.
