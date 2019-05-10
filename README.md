@@ -48,9 +48,7 @@ You are ready to go!
     
 #### Do you want to experiment with different Scikit-learn models?
 
-You can easily set your favourite sklearn classifier in `define_classification_model()`. Then, select one `model_type`. The following ones are already implemented: `linearSVM`, `SVM`, `perceptron`, `MLP`, and `kNN`.
-
-Check [Scikit-learn's documentation](https://scikit-learn.org/stable/) to know more about its possibilities.
+You can easily set your favourite sklearn classifier in `define_classification_model()`. Then, select one `model_type`. The following classifiers are already implemented: `linearSVM`, `SVM`, `perceptron`, `MLP`, and `kNN`. Check [Scikit-learn's documentation](https://scikit-learn.org/stable/) to know more about its possibilities.
     
 #### Does the script takes an eternity to extract the training features?
 
