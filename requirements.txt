@@ -14,6 +14,7 @@ matplotlib==3.0.3
 mock==3.0.5
 numba==0.43.1
 numpy==1.16.3
+openl3==0.2.0
 pkg-resources==0.0.0
 protobuf==3.7.1
 pycparser==2.19
