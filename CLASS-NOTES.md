@@ -12,6 +12,7 @@ Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5
 - Ensembles
 - Discuss overfitting
 - Visualize parts of the model
+- tSNE of the data and features?
 
 #### Tips to deploy your best model: 
 - https://scikit-learn.org/stable/modules/model_persistence.html
