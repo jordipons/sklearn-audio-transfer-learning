@@ -1,6 +1,7 @@
 import os
 import random
 import numpy as np
+from math import ceil
 import tensorflow as tf
 from tqdm import tqdm
 
@@ -15,17 +16,17 @@ from sklearn.neighbors import KNeighborsClassifier
 import vggish_input, vggish_slim, vggish_params, utils
 
 
-DATA_FOLDER = '/home/idrojsnop/Dropbox/Dolby/sklearn-audio-transfer-learning/data/'
+DATA_FOLDER = '../data/'
 config = {
     'dataset': 'GTZAN',
     'num_classes_dataset': 10,
     'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/',
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
-    'train_batch': 8,
-    'test_batch': 8,
+    'batch_size': 8,
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
-    'load_training_data': 'training_data_GTZAN_8643.npz' # False or load a model: 'training_data_GTZAN_839.npz'
+    'load_training_data': 'training_data_GTZAN_8844.npz', # False or load a model: 'training_data_GTZAN_839.npz'
+    'load_evaluation_data': 'evaluation_data_GTZAN_5760.npz'
 }
 
 
@@ -84,6 +85,26 @@ def extract_audioset_features(paths, path2gt):
     return [feature, ground_truth, identifiers]
 
 
+def extract_features_wrapper(paths, path2gt, model='AudioSet'):
+    """Wrapper function for extracting features (AudioSet or OpenL3) per batch.
+       TODO: add OpenL3
+    """
+    batch_size = config['batch_size']
+    first_batch = True
+    for batch_id in tqdm(range(ceil(len(paths)/batch_size))):
+        batch_paths = paths[(batch_id)*batch_size:(batch_id+1)*batch_size]
+        [x, y, refs] = extract_audioset_features(batch_paths, path2gt)
+        if first_batch:
+            [X, Y, IDS] = [x, y, refs]
+            first_batch = False
+        else:
+            X = np.concatenate((X, x), axis=0)
+            Y = np.concatenate((Y, y), axis=0)
+            IDS = np.concatenate((IDS, refs), axis=0)
+            
+    return [X, Y, IDS]
+
+
 if __name__ == '__main__':
 
     # load train/test audio paths & ground truth variables
@@ -101,30 +122,7 @@ if __name__ == '__main__':
 
     else:
         print('Extracting training features..')
-        first_batch = True
-        batch_id = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
-        for batch_id in tqdm(range(len(paths_train)//config['train_batch'])):
-            paths = paths_train[(batch_id)*config['train_batch']:(batch_id+1)*config['train_batch']]
-            [x, y, refs] = extract_audioset_features(paths, path2gt_train)
-            if first_batch:
-                [X, Y, IDS] = [x, y, refs]
-                first_batch = False
-            else:
-                 X = np.concatenate((X, x), axis=0)
-                 Y = np.concatenate((Y, y), axis=0)
-                 IDS = np.concatenate((IDS, refs), axis=0)
-
-        # remaining train data
-        paths = paths_train[(batch_id+1)*config['train_batch']:]
-        if not len(paths) == 0:
-            [x, y, refs] = extract_audioset_features(paths, path2gt_train)
-            if first_batch:
-                [X, Y, IDS] = [x, y, refs]
-                first_batch = False
-            else:
-                X = np.concatenate((X, x), axis=0)
-                Y = np.concatenate((Y, y), axis=0)
-                IDS = np.concatenate((IDS, refs), axis=0)
+        [X, Y, IDS] = extract_features_wrapper(paths_train, path2gt_train)
 
         # create a directory where to store the extracted training features
         audio_representations_folder = DATA_FOLDER + 'audio_representations/'
@@ -142,36 +140,31 @@ if __name__ == '__main__':
     model.fit(X, Y)
 
     print('Evaluating model..')
-    pred = []
-    identifiers = []
-    first_batch = True
-    batch_id = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
-    for batch_id in tqdm(range(len(paths_test)//config['test_batch'])):
-        paths = paths_test[(batch_id)*config['test_batch']:(batch_id+1)*config['test_batch']]
-        [x, _, refs] = extract_audioset_features(paths, path2gt_test)
-        if first_batch:
-            [pred, identifiers] = [model.predict(x), refs]
-            first_batch = False
-        else:
-            pred = np.concatenate((pred, model.predict(x)), axis=0)
-            identifiers = np.concatenate((identifiers, refs), axis=0)
-      
-    # remaining test data
-    paths = paths_test[(batch_id+1)*config['test_batch']:]
-    if not len(paths) == 0:
-        [x, _, refs] = extract_audioset_features(paths, path2gt_test)
-        if first_batch:
-            [pred, identifiers] = [model.predict(x), refs]
-            first_batch = False
-        else:
-            pred = np.concatenate((pred, model.predict(x)), axis=0)
-            identifiers = np.concatenate((identifiers, refs), axis=0)
+
+    if config['load_evaluation_data']:
+        print('Loading evaluation features..')
+        evaluation_data = np.load(DATA_FOLDER + 'audio_representations/' + config['load_evaluation_data'])
+        [X, IDS] = [evaluation_data['X'], evaluation_data['IDS']]
+
+    else:
+        print('Extracting evaluation features..')
+        [X, Y, IDS] = extract_features_wrapper(paths_test, path2gt_test)
+
+        # create a directory where to store the extracted evaluation features
+        audio_representations_folder = DATA_FOLDER + 'audio_representations/'
+        if not os.path.exists(audio_representations_folder):
+            os.makedirs(audio_representations_folder)
+        evaluation_data_file_name = 'evaluation_data_' + str(config['dataset']) + '_' +  str(random.randint(0,10000))
+        np.savez(audio_representations_folder + evaluation_data_file_name, X=X, Y=Y, IDS=IDS)
+
+    print('Predict labels on evaluation data')
+    pred = model.predict(X)
 
     # agreggating same ID: majority voting
     y_pred = []
     y_true = []
     for pt in paths_test:
-        y_pred.append(np.argmax(np.bincount(pred[np.where(identifiers==pt)]))) # majority voting
+        y_pred.append(np.argmax(np.bincount(pred[np.where(IDS==pt)]))) # majority voting
         y_true.append(int(path2gt_test[pt]))
 
     # print and store the results
