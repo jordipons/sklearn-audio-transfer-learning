@@ -39,7 +39,7 @@ def define_classification_model():
         # otpimizes log-loss, also known as cross-entropy with sgd
         from sklearn.neural_network import MLPClassifier
         return MLPClassifier(hidden_layer_sizes=(20,), max_iter=600, verbose=10, 
-               solver='sgd', learning_rate='constant', learning_rate_init='0.001')
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
     elif config['model_type'] == 'kNN':
         from sklearn.neighbors import KNeighborsClassifier
         return KNeighborsClassifier(n_neighbors=1, metric='cosine')
