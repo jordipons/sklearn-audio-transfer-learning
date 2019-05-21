@@ -3,10 +3,17 @@ import random
 import numpy as np
 import tensorflow as tf
 from tqdm import tqdm
+
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
+from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
+from sklearn.linear_model import SGDClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
 import vggish_input, vggish_slim, vggish_params, utils
+
 
 DATA_FOLDER = '/home/idrojsnop/Dropbox/Dolby/sklearn-audio-transfer-learning/data/'
 config = {
@@ -21,29 +28,26 @@ config = {
     'load_training_data': 'training_data_GTZAN_8643.npz' # False or load a model: 'training_data_GTZAN_839.npz'
 }
 
+
 def define_classification_model():
     """ Select and define the model you will use for the classifier. 
     """
     if config['model_type'] == 'linearSVM':
         # linearSVM can be faster than SVM
-        from sklearn.svm import LinearSVC
         return LinearSVC(C=1)
     elif config['model_type'] == 'SVM':
-        from sklearn.svm import SVC
         return SVC(C=1, kernel='rbf', gamma='scale')
     elif config['model_type'] == 'perceptron':
         # otpimizes log-loss, also known as cross-entropy with sgd
-        from sklearn.linear_model import SGDClassifier
         return SGDClassifier(max_iter=600, verbose=0.5, loss='log', learning_rate='optimal')
     elif config['model_type'] == 'MLP':
         # otpimizes log-loss, also known as cross-entropy with sgd
-        from sklearn.neural_network import MLPClassifier
         return MLPClassifier(hidden_layer_sizes=(20,), max_iter=600, verbose=10, 
                solver='sgd', learning_rate='constant', learning_rate_init=0.001)
     elif config['model_type'] == 'kNN':
-        from sklearn.neighbors import KNeighborsClassifier
         return KNeighborsClassifier(n_neighbors=1, metric='cosine')
 
+    
 def extract_audioset_features(paths, path2gt): 
     """Extracts Audioset features and their corresponding ground_truth and identifiers (the path).
 
@@ -98,9 +102,9 @@ if __name__ == '__main__':
     else:
         print('Extracting training features..')
         first_batch = True
-        pointer = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
-        for pointer in tqdm(range(len(paths_train)//config['train_batch'])):
-            paths = paths_train[(pointer)*config['train_batch']:(pointer+1)*config['train_batch']]
+        batch_id = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
+        for batch_id in tqdm(range(len(paths_train)//config['train_batch'])):
+            paths = paths_train[(batch_id)*config['train_batch']:(batch_id+1)*config['train_batch']]
             [x, y, refs] = extract_audioset_features(paths, path2gt_train)
             if first_batch:
                 [X, Y, IDS] = [x, y, refs]
@@ -111,7 +115,7 @@ if __name__ == '__main__':
                  IDS = np.concatenate((IDS, refs), axis=0)
 
         # remaining train data
-        paths = paths_train[(pointer+1)*config['train_batch']:]
+        paths = paths_train[(batch_id+1)*config['train_batch']:]
         if not len(paths) == 0:
             [x, y, refs] = extract_audioset_features(paths, path2gt_train)
             if first_batch:
@@ -141,9 +145,9 @@ if __name__ == '__main__':
     pred = []
     identifiers = []
     first_batch = True
-    pointer = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
-    for pointer in tqdm(range(len(paths_test)//config['test_batch'])):
-        paths = paths_test[(pointer)*config['test_batch']:(pointer+1)*config['test_batch']]
+    batch_id = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
+    for batch_id in tqdm(range(len(paths_test)//config['test_batch'])):
+        paths = paths_test[(batch_id)*config['test_batch']:(batch_id+1)*config['test_batch']]
         [x, _, refs] = extract_audioset_features(paths, path2gt_test)
         if first_batch:
             [pred, identifiers] = [model.predict(x), refs]
@@ -153,7 +157,7 @@ if __name__ == '__main__':
             identifiers = np.concatenate((identifiers, refs), axis=0)
       
     # remaining test data
-    paths = paths_test[(pointer+1)*config['test_batch']:]
+    paths = paths_test[(batch_id+1)*config['test_batch']:]
     if not len(paths) == 0:
         [x, _, refs] = extract_audioset_features(paths, path2gt_test)
         if first_batch:
@@ -185,4 +189,3 @@ if __name__ == '__main__':
     print(config)
     print(conf_matrix)    
     print('Accuracy: ' + str(acc))
-
