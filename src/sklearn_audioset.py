@@ -27,9 +27,9 @@ config = {
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8,
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
-    # Data: False or load pre-computed features e.g. 'training_data_GTZAN_audioset.npz'
-    'load_training_data': False, 
-    'load_evaluation_data': False
+    # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_audioset.npz'
+    'load_training_data': 'training_data_GTZAN_audioset.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_audioset.npz'
 }
 
 
