@@ -76,25 +76,22 @@ def matrix_visualization(matrix,title=None):
     plt.show()
 
 
-def wavefile_to_waveform(wav_file):
-    #START NEW#
+def wavefile_to_waveform(wav_file, features_type):
     data, samplerate = sf.read(wav_file)
-    tmp_name = str(int(np.random.rand(1)*1000000)) + '.wav'
-    sf.write(tmp_name, data, samplerate, subtype='PCM_16')
-    sr, wav_data = wavfile.read(tmp_name)
-    os.remove(tmp_name)
-    #END NEW#
-    #REMOVED# sr, wav_data = wavfile.read(wav_file)
-
-    assert wav_data.dtype == np.int16, 'Bad sample type: %r' % wav_data.dtype
-    samples = wav_data / 32768.0  # Convert to [-1.0, +1.0]
+    if features_type == 'audioset':
+        tmp_name = str(int(np.random.rand(1)*1000000)) + '.wav'
+        sf.write(tmp_name, data, samplerate, subtype='PCM_16')
+        sr, wav_data = wavfile.read(tmp_name)
+        os.remove(tmp_name)
+        # sr, wav_data = wavfile.read(wav_file) # as done in Audioset
+        assert wav_data.dtype == np.int16, 'Bad sample type: %r' % wav_data.dtype
+        data = wav_data / 32768.0  # Convert to [-1.0, +1.0]
   
-    #START NEW#
-    src_repeat = samples
-    while (src_repeat.shape[0] < sr): # at least one second of samples, if not repead-pad
-        src_repeat = np.concatenate((src_repeat, samples), axis=0)
-        samples = src_repeat[:sr]
-    #END NEW#
+    # at least one second of samples, if not repead-pad
+    src_repeat = data
+    while (src_repeat.shape[0] < sr): 
+        src_repeat = np.concatenate((src_repeat, data), axis=0)
+        data = src_repeat[:sr]
 
-    return samples, sr
+    return data, sr
 

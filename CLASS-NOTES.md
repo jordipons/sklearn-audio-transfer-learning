@@ -2,8 +2,9 @@
 
 Clone this Github repository: `git clone https://github.com/jordipons/sklearn-audio-transfer-learning.git`.
 
-Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
+Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements_class.txt`.
 
+Run the main python script: `cd src/`, and `python audio_transfer_learning.py`.
 
 #### Why we get different results when running several times the same neural network-based experiment?
 

@@ -4,7 +4,6 @@ import numpy as np
 from math import ceil
 from tqdm import tqdm
 import tensorflow as tf
-# import openl3 # cannot be installed by now !
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.svm import LinearSVC
@@ -16,6 +15,11 @@ from sklearn.neighbors import KNeighborsClassifier
 import vggish_input, vggish_slim, vggish_params, utils
 from utils import wavefile_to_waveform
 
+try:
+    import openl3
+except:
+    print('Warning: you did not install openl3, you cannot use this feature extractor')
+
 
 DATA_FOLDER = '../data/'
 config = {
@@ -25,11 +29,11 @@ config = {
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8,
-    'features_type': 'openl3', # 'audioset' or 'openl3'
+    'features_type': 'audioset', # 'audioset' or 'openl3'
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_audioset.npz'
-    'load_training_data': 'training_data_GTZAN_openl3.npz', # False or 'training_data_GTZAN_audioset.npz', 
-    'load_evaluation_data': 'evaluation_data_GTZAN_openl3.npz' # False or 'evaluation_data_GTZAN_audioset.npz'
+    'load_training_data': 'training_data_GTZAN_audioset.npz', # False or 'training_data_GTZAN_audioset.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_audioset.npz' # False or 'evaluation_data_GTZAN_audioset.npz'
 }
 
 
@@ -98,7 +102,7 @@ def extract_openl3_features(paths, path2gt):
                                                embedding_size=512)
     first_audio = True
     for p in paths:
-        wave, sr = wavefile_to_waveform(config['audio_folder'] + p)
+        wave, sr = wavefile_to_waveform(config['audio_folder'] + p, 'openl3')
         emb, _ = openl3.get_embedding(wave, sr, hop_size=1, model=model, verbose=False)
         if first_audio:
             features = emb
@@ -146,6 +150,7 @@ def extract_features_wrapper(paths, path2gt, model='audioset', save_as=False):
         if not os.path.exists(audio_representations_folder):
             os.makedirs(audio_representations_folder)
         np.savez(audio_representations_folder + save_as, X=X, Y=Y, IDS=IDS)
+        print('Audio features stored: ', save_as)
 
     return [X, Y, IDS]
 
@@ -168,7 +173,7 @@ if __name__ == '__main__':
     else:
         print('Extracting training features..')
         [X, Y, IDS] = extract_features_wrapper(paths_train, path2gt_train, model=config['features_type'], 
-                                               save_as='training_data_{}_audioset'.format(config['dataset']))
+                                               save_as='training_data_{}_{}'.format(config['dataset'], config['features_type']))
 
     print(X.shape)
     print(Y.shape)
@@ -199,11 +204,12 @@ if __name__ == '__main__':
     else:
         print('Extracting evaluation features..')
         [X, Y, IDS] = extract_features_wrapper(paths_test, path2gt_test, model=config['features_type'], 
-                                               save_as='evaluation_data_{}_audioset'.format(config['dataset']))
+                                               save_as='evaluation_data_{}_{}'.format(config['dataset'], config['features_type']))
 
-    print('Predict labels on evaluation data')
     #X = pca.transform(X)
     #print("Shape after PCA: ", X.shape)
+
+    print('Predict labels on evaluation data')
     pred = model.predict(X)
 
     # agreggating same ID: majority voting
@@ -219,8 +225,7 @@ if __name__ == '__main__':
     experiments_folder = DATA_FOLDER + 'experiments/'
     if not os.path.exists(experiments_folder):
         os.makedirs(experiments_folder)
-    results_file_name = 'results_' + str(config['dataset']) + '_' + str(config['features_type']) + '_' + \
-                         str(config['model_type']) + '_' +  str(random.randint(0,10000)) + '.txt'
+    results_file_name = 'results_{}_{}_{}_{}.txt'.format(config['dataset'],config['features_type'],config['model_type'],random.randint(0,10000))
     to = open(experiments_folder + results_file_name, 'w')
     to.write(str(config) + '\n')
     to.write(str(conf_matrix) + '\n')
