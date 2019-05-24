@@ -1,7 +1,9 @@
 import os
 import random
 import numpy as np
+from math import ceil
 import tensorflow as tf
+import openl3
 from tqdm import tqdm
 
 from sklearn.metrics import accuracy_score
@@ -13,19 +15,21 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 import vggish_input, vggish_slim, vggish_params, utils
+from utils import wavefile_to_waveform
 
 
-DATA_FOLDER = '/home/idrojsnop/Dropbox/Dolby/sklearn-audio-transfer-learning/data/'
+DATA_FOLDER = '../data/'
 config = {
     'dataset': 'GTZAN',
     'num_classes_dataset': 10,
     'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/',
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
-    'train_batch': 8,
-    'test_batch': 8,
+    'batch_size': 8,
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
-    'load_training_data': 'training_data_GTZAN_8643.npz' # False or load a model: 'training_data_GTZAN_839.npz'
+    # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_audioset.npz'
+    'load_training_data': 'training_data_GTZAN_audioset.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_audioset.npz'
 }
 
 
@@ -84,6 +88,71 @@ def extract_audioset_features(paths, path2gt):
     return [feature, ground_truth, identifiers]
 
 
+def extract_openl3_features(paths, path2gt):
+    """Extracts OpenL3 features and their corresponding ground_truth and identifiers (the path).
+
+       OpenL3 features are extracted from non-overlapping audio patches of 1 second, 
+       where each audio patch covers 128 mel bands.
+
+       We repeat ground_truth and identifiers to fit the number of extracted OpenL3 features.
+    """
+    model = openl3.models.load_embedding_model(input_repr="mel128", 
+                                               content_type="music",
+                                               embedding_size=512)
+    first_audio = True
+    for p in paths:
+        wave, sr = wavefile_to_waveform(config['audio_folder'] + p)
+        emb, _ = openl3.get_embedding(wave, sr, hop_size=1, model=model, verbose=False)
+        if first_audio:
+            features = emb
+            ground_truth = np.repeat(path2gt[p], features.shape[0], axis=0)
+            identifiers = np.repeat(p, features.shape[0], axis=0)
+            first_audio = False
+        else:
+            features = np.concatenate((features, emb), axis=0)
+            tmp_gt = np.repeat(path2gt[p], emb.shape[0], axis=0)
+            ground_truth = np.concatenate((ground_truth, tmp_gt), axis=0)
+            tmp_id = np.repeat(p, emb.shape[0], axis=0)
+            identifiers = np.concatenate((identifiers, tmp_id), axis=0)
+
+    return [features, ground_truth, identifiers]
+
+    
+def extract_features_wrapper(paths, path2gt, model='audioset', save_as=False):
+    """Wrapper function for extracting features (Audioset or OpenL3) per batch.
+       If a save_as string argument is passed, the features wiil be saved in 
+       the specified file.
+    """
+    if model == 'audioset':
+        feature_extractor = extract_audioset_features
+    elif model == 'openl3':
+        feature_extractor = extract_openl3_features
+    else:
+        raise NotImplementedError('Current implementation only supports AudioSet and OpenL3 features')
+
+    batch_size = config['batch_size']
+    first_batch = True
+    for batch_id in tqdm(range(ceil(len(paths)/batch_size))):
+        batch_paths = paths[(batch_id)*batch_size:(batch_id+1)*batch_size]
+        [x, y, refs] = feature_extractor(batch_paths, path2gt)
+        if first_batch:
+            [X, Y, IDS] = [x, y, refs]
+            first_batch = False
+        else:
+            X = np.concatenate((X, x), axis=0)
+            Y = np.concatenate((Y, y), axis=0)
+            IDS = np.concatenate((IDS, refs), axis=0)
+    
+    if save_as:  # save data to file
+        # create a directory where to store the extracted training features
+        audio_representations_folder = DATA_FOLDER + 'audio_representations/'
+        if not os.path.exists(audio_representations_folder):
+            os.makedirs(audio_representations_folder)
+        np.savez(audio_representations_folder + save_as, X=X, Y=Y, IDS=IDS)
+
+    return [X, Y, IDS]
+
+
 if __name__ == '__main__':
 
     # load train/test audio paths & ground truth variables
@@ -101,37 +170,8 @@ if __name__ == '__main__':
 
     else:
         print('Extracting training features..')
-        first_batch = True
-        batch_id = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
-        for batch_id in tqdm(range(len(paths_train)//config['train_batch'])):
-            paths = paths_train[(batch_id)*config['train_batch']:(batch_id+1)*config['train_batch']]
-            [x, y, refs] = extract_audioset_features(paths, path2gt_train)
-            if first_batch:
-                [X, Y, IDS] = [x, y, refs]
-                first_batch = False
-            else:
-                 X = np.concatenate((X, x), axis=0)
-                 Y = np.concatenate((Y, y), axis=0)
-                 IDS = np.concatenate((IDS, refs), axis=0)
-
-        # remaining train data
-        paths = paths_train[(batch_id+1)*config['train_batch']:]
-        if not len(paths) == 0:
-            [x, y, refs] = extract_audioset_features(paths, path2gt_train)
-            if first_batch:
-                [X, Y, IDS] = [x, y, refs]
-                first_batch = False
-            else:
-                X = np.concatenate((X, x), axis=0)
-                Y = np.concatenate((Y, y), axis=0)
-                IDS = np.concatenate((IDS, refs), axis=0)
-
-        # create a directory where to store the extracted training features
-        audio_representations_folder = DATA_FOLDER + 'audio_representations/'
-        if not os.path.exists(audio_representations_folder):
-            os.makedirs(audio_representations_folder)
-        training_data_file_name = 'training_data_' + str(config['dataset']) + '_' +  str(random.randint(0,10000))
-        np.savez(audio_representations_folder + training_data_file_name, X=X, Y=Y, IDS=IDS)
+        [X, Y, IDS] = extract_features_wrapper(paths_train, path2gt_train, model='audioset', 
+                                               save_as='training_data_{}_audioset'.format(config['dataset']))
 
     print(X.shape)
     print(Y.shape)
@@ -142,36 +182,25 @@ if __name__ == '__main__':
     model.fit(X, Y)
 
     print('Evaluating model..')
-    pred = []
-    identifiers = []
-    first_batch = True
-    batch_id = -1 # it enables to access the remaining data (below) when our batch is too big for the available data
-    for batch_id in tqdm(range(len(paths_test)//config['test_batch'])):
-        paths = paths_test[(batch_id)*config['test_batch']:(batch_id+1)*config['test_batch']]
-        [x, _, refs] = extract_audioset_features(paths, path2gt_test)
-        if first_batch:
-            [pred, identifiers] = [model.predict(x), refs]
-            first_batch = False
-        else:
-            pred = np.concatenate((pred, model.predict(x)), axis=0)
-            identifiers = np.concatenate((identifiers, refs), axis=0)
-      
-    # remaining test data
-    paths = paths_test[(batch_id+1)*config['test_batch']:]
-    if not len(paths) == 0:
-        [x, _, refs] = extract_audioset_features(paths, path2gt_test)
-        if first_batch:
-            [pred, identifiers] = [model.predict(x), refs]
-            first_batch = False
-        else:
-            pred = np.concatenate((pred, model.predict(x)), axis=0)
-            identifiers = np.concatenate((identifiers, refs), axis=0)
+
+    if config['load_evaluation_data']:
+        print('Loading evaluation features..')
+        evaluation_data = np.load(DATA_FOLDER + 'audio_representations/' + config['load_evaluation_data'])
+        [X, IDS] = [evaluation_data['X'], evaluation_data['IDS']]
+
+    else:
+        print('Extracting evaluation features..')
+        [X, Y, IDS] = extract_features_wrapper(paths_test, path2gt_test, model='audioset', 
+                                               save_as='evaluation_data_{}_audioset'.format(config['dataset']))
+
+    print('Predict labels on evaluation data')
+    pred = model.predict(X)
 
     # agreggating same ID: majority voting
     y_pred = []
     y_true = []
     for pt in paths_test:
-        y_pred.append(np.argmax(np.bincount(pred[np.where(identifiers==pt)]))) # majority voting
+        y_pred.append(np.argmax(np.bincount(pred[np.where(IDS==pt)]))) # majority voting
         y_true.append(int(path2gt_test[pt]))
 
     # print and store the results

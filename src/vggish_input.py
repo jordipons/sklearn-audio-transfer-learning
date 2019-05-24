@@ -21,6 +21,7 @@ from scipy.io import wavfile
 
 import mel_features
 import vggish_params
+from utils import wavefile_to_waveform
 
 
 def waveform_to_examples(data, sample_rate):
@@ -80,25 +81,6 @@ def wavfile_to_examples(wav_file):
   Returns:
     See waveform_to_examples.
   """
-  #START NEW#
-  import soundfile as sf
-  data, samplerate = sf.read(wav_file)
-  tmp_name = str(int(np.random.rand(1)*1000000)) + '.wav'
-  sf.write(tmp_name, data, samplerate, subtype='PCM_16')
-  sr, wav_data = wavfile.read(tmp_name)
-  import os
-  os.remove(tmp_name)
-  #END NEW#
-  #REMOVED# sr, wav_data = wavfile.read(wav_file)
-
-  assert wav_data.dtype == np.int16, 'Bad sample type: %r' % wav_data.dtype
-  samples = wav_data / 32768.0  # Convert to [-1.0, +1.0]
-  
-  #START NEW#
-  src_repeat = samples
-  while (src_repeat.shape[0] < sr): # at least one second of samples, if not repead-pad
-      src_repeat = np.concatenate((src_repeat, samples), axis=0)
-      samples = src_repeat[:sr]
-  #END NEW#
+  samples, sr = wavefile_to_waveform(wav_file)
 
   return waveform_to_examples(samples, sr)

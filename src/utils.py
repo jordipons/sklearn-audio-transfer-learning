@@ -1,5 +1,9 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
+import soundfile as sf
+from scipy.io import wavfile
+
 
 def load_path2gt(paths_file, config):
     """ Given the path, construct the ground truth vectors.
@@ -19,6 +23,7 @@ def load_path2gt(paths_file, config):
         path2onehot[path] = label2onehot(label, config['num_classes_dataset'])
     return paths, path2gt, path2onehot
 
+
 def label2onehot(label, num_classes):
     """ Convert class label to one hot vector.
         Example: label2onehot(label=2, num_classes=5) > array([0., 0., 1., 0., 0.])
@@ -26,6 +31,7 @@ def label2onehot(label, num_classes):
     onehot = np.zeros(num_classes)
     onehot[label] = 1
     return onehot
+
 
 def path2gt_datasets(path, dataset):
     """ Given the audio path, it returns the ground truth label.
@@ -58,6 +64,7 @@ def path2gt_datasets(path, dataset):
     else:
             print('Did not find the implementation of ' + str(dataset) + ' dataset!')
 
+
 def matrix_visualization(matrix,title=None):
     """ Visualize 2D matrices like spectrograms or feature maps.
     """
@@ -68,3 +75,25 @@ def matrix_visualization(matrix,title=None):
         plt.title(title)
     plt.show()
 
+
+def wavefile_to_waveform(wav_file):
+    #START NEW#
+    data, samplerate = sf.read(wav_file)
+    tmp_name = str(int(np.random.rand(1)*1000000)) + '.wav'
+    sf.write(tmp_name, data, samplerate, subtype='PCM_16')
+    sr, wav_data = wavfile.read(tmp_name)
+    os.remove(tmp_name)
+    #END NEW#
+    #REMOVED# sr, wav_data = wavfile.read(wav_file)
+
+    assert wav_data.dtype == np.int16, 'Bad sample type: %r' % wav_data.dtype
+    samples = wav_data / 32768.0  # Convert to [-1.0, +1.0]
+  
+    #START NEW#
+    src_repeat = samples
+    while (src_repeat.shape[0] < sr): # at least one second of samples, if not repead-pad
+        src_repeat = np.concatenate((src_repeat, samples), axis=0)
+        samples = src_repeat[:sr]
+    #END NEW#
+
+    return samples, sr

@@ -10,7 +10,7 @@ v_env
 data/train/
 data/audio/GTZAN/genres
 data/experiments/
-data/audio_representations/
+data/audio_representations/*
 data/experiments_baseline_dev/
 data/experiments_old/
 data/experiments_post_old/
@@ -30,3 +30,9 @@ src/__pycache__/*.pyc
 *.mp3
 *.tar.gz
 env/
+
+# negation to keep precomputed features
+!data/audio_representations/training_data_GTZAN_audioset.npz
+!data/audio_representations/evaluation_data_GTZAN_audioset.npz
+!data/audio_representations/training_data_GTZAN_openl3.npz
+!data/audio_representations/evaluation_data_GTZAN_openl3.npz
