@@ -12,8 +12,8 @@ Create a python3 virtual environment `python3 -m venv env`, activate it `source 
 
 #### Download the pre-trained models:
 
-- **Audioset - VGGish:** Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
-- **OpenL3:** install it via pip `pip install --timeout 100000000 --no-cache-dir openl3 `. Use a large timeout, because it takes some time to download the model. In case you need to repeat the instalation, maybe it is worth using the `--nocache-dir` option.
+- **VGGish:** Download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
+- **OpenL3:** Download it via pip `pip install --timeout 100000000 --no-cache-dir openl3 `. Use a large timeout, because it takes some time to download the model. In case you need to repeat the instalation, maybe it is worth using the `--nocache-dir` option.
 
 ## Music genre classification: a toy example
 
