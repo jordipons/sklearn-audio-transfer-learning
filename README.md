@@ -1,7 +1,7 @@
 # Audio Transfer Learning with Scikit-learn and Tensorflow
 We use the pre-trained Tensorflow models as audio feature extractors. These deep convolutional neural networks were trained with the [Audioset dataset](https://research.google.com/audioset/), that is conformed by 2M YouTube audios for the task of general audio tagging. Scikit-learn classifiers are employed to rapidly prototype competent audio classifiers that can be trained on a CPU.
 
-See the pipeline with the [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) model:
+See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) model:
 
 <p align="center"><img src="sklearn-audio-transfer-learning.png"></p>
 
