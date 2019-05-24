@@ -32,7 +32,7 @@ src/__pycache__/*.pyc
 env/
 
 # negation to keep precomputed features
-!data/audio_representations/training_data_GTZAN_audioset.npz
-!data/audio_representations/evaluation_data_GTZAN_audioset.npz
+!data/audio_representations/training_data_GTZAN_vggish.npz
+!data/audio_representations/evaluation_data_GTZAN_vggish.npz
 !data/audio_representations/training_data_GTZAN_openl3.npz
 !data/audio_representations/evaluation_data_GTZAN_openl3.npz
