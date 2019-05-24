@@ -29,11 +29,11 @@ config = {
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8,
-    'features_type': 'audioset', # 'audioset' or 'openl3'
+    'features_type': 'vggish', # 'vggish' or 'openl3'
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
-    # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_audioset.npz'
-    'load_training_data': 'training_data_GTZAN_audioset.npz', # False or 'training_data_GTZAN_audioset.npz', 
-    'load_evaluation_data': 'evaluation_data_GTZAN_audioset.npz' # False or 'evaluation_data_GTZAN_audioset.npz'
+    # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_vggish.npz'
+    'load_training_data': 'training_data_GTZAN_vggish.npz', # False or 'training_data_GTZAN_vggish.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_vggish.npz' # False or 'evaluation_data_GTZAN_vggish.npz'
 }
 
 
@@ -53,13 +53,13 @@ def define_classification_model():
                solver='sgd', learning_rate='constant', learning_rate_init=0.001)
 
     
-def extract_audioset_features(paths, path2gt): 
-    """Extracts Audioset features and their corresponding ground_truth and identifiers (the path).
+def extract_vggish_features(paths, path2gt): 
+    """Extracts VGGish features and their corresponding ground_truth and identifiers (the path).
 
-       Audioset features are extracted from non-overlapping audio patches of 0.96 seconds, 
+       VGGish features are extracted from non-overlapping audio patches of 0.96 seconds, 
        where each audio patch covers 64 mel bands and 96 frames of 10 ms each.
 
-       We repeat ground_truth and identifiers to fit the number of extracted Audioset features.
+       We repeat ground_truth and identifiers to fit the number of extracted VGGish features.
     """
     # 1) Extract log-mel spectrograms
     first_audio = True
@@ -77,7 +77,7 @@ def extract_audioset_features(paths, path2gt):
             tmp_id = np.repeat(p, tmp_in.shape[0], axis=0)
             identifiers = np.concatenate((identifiers, tmp_id), axis=0)
 
-    # 2) Load Tensorflow model to extract Audioset features
+    # 2) Load Tensorflow model to extract VGGish features
     with tf.Graph().as_default(), tf.Session() as sess:
         vggish_slim.define_vggish_slim(training=False)
         vggish_slim.load_vggish_slim_checkpoint(sess, 'vggish_model.ckpt')
@@ -119,17 +119,17 @@ def extract_openl3_features(paths, path2gt):
     return [features, ground_truth, identifiers]
 
     
-def extract_features_wrapper(paths, path2gt, model='audioset', save_as=False):
-    """Wrapper function for extracting features (Audioset or OpenL3) per batch.
+def extract_features_wrapper(paths, path2gt, model='vggish', save_as=False):
+    """Wrapper function for extracting features (VGGish or OpenL3) per batch.
        If a save_as string argument is passed, the features wiil be saved in 
        the specified file.
     """
-    if model == 'audioset':
-        feature_extractor = extract_audioset_features
+    if model == 'vggish':
+        feature_extractor = extract_vggish_features
     elif model == 'openl3':
         feature_extractor = extract_openl3_features
     else:
-        raise NotImplementedError('Current implementation only supports AudioSet and OpenL3 features')
+        raise NotImplementedError('Current implementation only supports VGGish and OpenL3 features')
 
     batch_size = config['batch_size']
     first_batch = True

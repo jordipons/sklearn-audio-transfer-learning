@@ -81,6 +81,6 @@ def wavfile_to_examples(wav_file):
   Returns:
     See waveform_to_examples.
   """
-  samples, sr = wavefile_to_waveform(wav_file, 'audioset')
+  samples, sr = wavefile_to_waveform(wav_file, 'vggish')
 
   return waveform_to_examples(samples, sr)
