@@ -25,7 +25,7 @@ As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/so
 #### Run your classifier
 Open the `sklearn-audio-transfer-learning/src/` directory in a terminal and run `python audio_transfer_learning.py`. Approximated run time in your laptop: 15 min.
 
-Congrats, you have build a music genre classifier! The model we developed achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and is quite competent when compared to the best result we are aware of [(82.1%)](https://www.mdpi.com/2076-3417/8/1/150).
+Congrats, you have build a music genre classifier! The model we developed (VGGish + SVM) achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and is quite competent when compared to the best result we are aware of [(82.1%)](https://www.mdpi.com/2076-3417/8/1/150).
 
 #### Can you improve this result? 
 
