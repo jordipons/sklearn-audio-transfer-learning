@@ -4,8 +4,6 @@ Clone this Github repository: `git clone https://github.com/jordipons/sklearn-au
 
 Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
 
-Download the pre-trained model (5 min) `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
-
 
 #### Why we get different results when running several times the same neural network-based experiment?
 

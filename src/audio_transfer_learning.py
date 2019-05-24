@@ -2,10 +2,9 @@ import os
 import random
 import numpy as np
 from math import ceil
-import tensorflow as tf
-import openl3
 from tqdm import tqdm
-
+import tensorflow as tf
+# import openl3 # cannot be installed by now !
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.svm import LinearSVC
@@ -26,30 +25,28 @@ config = {
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8,
+    'features_type': 'openl3', # 'audioset' or 'openl3'
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_audioset.npz'
-    'load_training_data': 'training_data_GTZAN_audioset.npz', 
-    'load_evaluation_data': 'evaluation_data_GTZAN_audioset.npz'
+    'load_training_data': 'training_data_GTZAN_openl3.npz', # False or 'training_data_GTZAN_audioset.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_openl3.npz' # False or 'evaluation_data_GTZAN_audioset.npz'
 }
 
 
 def define_classification_model():
     """ Select and define the model you will use for the classifier. 
     """
-    if config['model_type'] == 'linearSVM':
-        # linearSVM can be faster than SVM
+    if config['model_type'] == 'linearSVM': # linearSVM can be faster than SVM
         return LinearSVC(C=1)
-    elif config['model_type'] == 'SVM':
+    elif config['model_type'] == 'SVM': # non-linearSVM, we can use the kernel trick
         return SVC(C=1, kernel='rbf', gamma='scale')
-    elif config['model_type'] == 'perceptron':
-        # otpimizes log-loss, also known as cross-entropy with sgd
+    elif config['model_type'] == 'kNN': # k-nearest neighbour
+        return KNeighborsClassifier(n_neighbors=1, metric='cosine')
+    elif config['model_type'] == 'perceptron': # otpimizes log-loss, also known as cross-entropy with sgd
         return SGDClassifier(max_iter=600, verbose=0.5, loss='log', learning_rate='optimal')
-    elif config['model_type'] == 'MLP':
-        # otpimizes log-loss, also known as cross-entropy with sgd
+    elif config['model_type'] == 'MLP': # otpimizes log-loss, also known as cross-entropy with sgd
         return MLPClassifier(hidden_layer_sizes=(20,), max_iter=600, verbose=10, 
                solver='sgd', learning_rate='constant', learning_rate_init=0.001)
-    elif config['model_type'] == 'kNN':
-        return KNeighborsClassifier(n_neighbors=1, metric='cosine')
 
     
 def extract_audioset_features(paths, path2gt): 
@@ -170,12 +167,23 @@ if __name__ == '__main__':
 
     else:
         print('Extracting training features..')
-        [X, Y, IDS] = extract_features_wrapper(paths_train, path2gt_train, model='audioset', 
+        [X, Y, IDS] = extract_features_wrapper(paths_train, path2gt_train, model=config['features_type'], 
                                                save_as='training_data_{}_audioset'.format(config['dataset']))
 
     print(X.shape)
     print(Y.shape)
-    print(Y)
+
+    #interval = range(0, len(X), int(len(X)/250))
+    #print(interval)
+    #utils.matrix_visualization(X[interval])
+
+    #from sklearn import decomposition
+    #pca = decomposition.PCA(n_components=128, whiten=True)
+    #pca.fit(X)
+    #X = pca.transform(X)
+    #print("Shape after PCA: ", X.shape)
+
+    #utils.matrix_visualization(X[interval])
 
     print('Fitting model..')
     model = define_classification_model()
@@ -190,10 +198,12 @@ if __name__ == '__main__':
 
     else:
         print('Extracting evaluation features..')
-        [X, Y, IDS] = extract_features_wrapper(paths_test, path2gt_test, model='audioset', 
+        [X, Y, IDS] = extract_features_wrapper(paths_test, path2gt_test, model=config['features_type'], 
                                                save_as='evaluation_data_{}_audioset'.format(config['dataset']))
 
     print('Predict labels on evaluation data')
+    #X = pca.transform(X)
+    #print("Shape after PCA: ", X.shape)
     pred = model.predict(X)
 
     # agreggating same ID: majority voting
@@ -209,7 +219,8 @@ if __name__ == '__main__':
     experiments_folder = DATA_FOLDER + 'experiments/'
     if not os.path.exists(experiments_folder):
         os.makedirs(experiments_folder)
-    results_file_name = 'results_' + str(config['dataset']) + '_' +  str(random.randint(0,10000)) + '.txt'
+    results_file_name = 'results_' + str(config['dataset']) + '_' + str(config['features_type']) + '_' + \
+                         str(config['model_type']) + '_' +  str(random.randint(0,10000)) + '.txt'
     to = open(experiments_folder + results_file_name, 'w')
     to.write(str(config) + '\n')
     to.write(str(conf_matrix) + '\n')

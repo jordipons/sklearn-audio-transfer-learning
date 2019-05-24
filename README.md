@@ -18,7 +18,7 @@ Download the pre-trained model `wget https://storage.googleapis.com/audioset/vgg
 #### Set the task up
 As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz` and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour. We already provide (fault-filtered) train/test partitions in `sklearn-audio-transfer-learning/data/index/GTZAN/`.
 
-`sklearn_audioset.py` is the main python file. Note that on its top-20 lines you can configure it. First, set the data folder. In my case: `DATA_FOLDER = '/home/jordipons/transfer-learning-tutorial/data/'`.
+`sklearn_audioset.py` is the main python file. Note that on its top-20 lines you can configure it. First, set the data folder. In my case: `DATA_FOLDER = '../data/'`.
 
 You can also set some other parameters. For example, you can select which sklearn classifier to employ. Sklearn has tones of possibilities! You can easily set your favourite sklearn classifier in `define_classification_model()`. To start, let's select `linearSVM`. We set it as follows: `LinearSVC(C=1)`.
 
