@@ -18,7 +18,7 @@ from utils import wavefile_to_waveform
 try:
     import openl3
 except:
-    print('Warning: you did not install openl3, you cannot use this feature extractor')
+    print('Warning: you did not install openl3, you cannot use this feature extractor (but you can use the pre-computed features).')
 
 
 DATA_FOLDER = '../data/'
@@ -29,11 +29,11 @@ config = {
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8,
-    'features_type': 'vggish', # 'vggish' or 'openl3'
+    'features_type': 'openl3', # 'vggish' or 'openl3'
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_vggish.npz'
-    'load_training_data': 'training_data_GTZAN_vggish.npz', # False or 'training_data_GTZAN_vggish.npz', 
-    'load_evaluation_data': 'evaluation_data_GTZAN_vggish.npz' # False or 'evaluation_data_GTZAN_vggish.npz'
+    'load_training_data': 'training_data_GTZAN_openl3.npz', # False or 'training_data_GTZAN_vggish.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_openl3.npz' # False or 'evaluation_data_GTZAN_vggish.npz'
 }
 
 
