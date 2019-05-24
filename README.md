@@ -52,25 +52,25 @@ You can easily set your favourite sklearn classifier in `define_classification_m
     
 #### Does the script takes an eternity to extract the training features?
 
-Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `training_data_GTZAN_8643.npz`).
+Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `evaluation_data_GTZAN_vggish.npz`).
 
 To re-compute the features, just set `load_training_data` to False.
     
 #### Does the script consumes too much RAM memory?
 
-Reduce the batch size by properlly setting `train_batch` and `test_batch`. The batch size defines the ammount of audios that are processed at once. The smaller it is, the lower the consumption of RAM memory.
+Reduce the batch size by properlly setting `batch_size`. The batch size defines the ammount of audios that are processed at once. The smaller it is, the lower the consumption of RAM memory.
 
 ## Scripts directory
-- `audio_transfer_learning.py`: main script where we build the audio classifiers with VGGish (Tensorflow) features and Scikit-learn.
+- `audio_transfer_learning.py`: main script where we build the audio classifiers with Tensorflow and Scikit-learn.
 - `utils.py`: auxiliar script with util functions that are used by `audio_transfer_learning.py`.
-- `vggish_input.py`,`vggish_params.py`,`vggish_slim.py`,`mel_features.py`,`vggish_model.ckpt`: auxiliar scripts to employ the VGGish pre-trained model that delivers the Audioset features.
+- `vggish_input.py`,`vggish_params.py`,`vggish_slim.py`,`mel_features.py`,`vggish_model.ckpt`: auxiliar scripts to employ the VGGish pre-trained model.
 
 ## Folders structure
 - `/src`: folder containing previously listed scripts.
-- `/data`: where all intermediate files (Audioset features, audio, results, etc.) will be stored. 
+- `/data`: where all intermediate files (pre-computed features, audio, results, etc.) will be stored. 
 - `/data/index/`: indexed files containing ground truth annotations and partitions.
 - `/data/audio/`: folder where to store the audio datasets.
 
 When running our scripts, the following folders will be created:
-- `./data/audio_representation/`: where the training Audioset features are stored.
+- `./data/audio_representation/`: where the pre-computed features are stored.
 - `./data/experiments/`: where the results of the experiments are stored.
