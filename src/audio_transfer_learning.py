@@ -28,7 +28,7 @@ config = {
     'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/',
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
-    'batch_size': 8,
+    'batch_size': 8, # set very big for openl3 (memory bug)
     'features_type': 'vggish', # 'vggish' or 'openl3'
     'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_vggish.npz'
