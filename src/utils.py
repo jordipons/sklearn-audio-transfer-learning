@@ -77,10 +77,10 @@ def matrix_visualization(matrix,title=None):
 
 
 def wavefile_to_waveform(wav_file, features_type):
-    data, samplerate = sf.read(wav_file)
+    data, sr = sf.read(wav_file)
     if features_type == 'vggish':
         tmp_name = str(int(np.random.rand(1)*1000000)) + '.wav'
-        sf.write(tmp_name, data, samplerate, subtype='PCM_16')
+        sf.write(tmp_name, data, sr, subtype='PCM_16')
         sr, wav_data = wavfile.read(tmp_name)
         os.remove(tmp_name)
         # sr, wav_data = wavfile.read(wav_file) # as done in VGGish Audioset
