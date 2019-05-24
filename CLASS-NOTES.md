@@ -1,3 +1,12 @@
+#### Quick setup for a class:
+
+Clone this Github repository: `git clone https://github.com/jordipons/sklearn-audio-transfer-learning.git`.
+
+Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
+
+Download the pre-trained model (5 min) `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
+
+
 #### Why we get different results when running several times the same neural network-based experiment?
 
 For example, with this setup `MLPClassifier(hidden_layer_sizes=(20,), max_iter=600, verbose=10, early_stopping=False)` we get these scores: 77.93%, 73.44%, or 75.12%.
