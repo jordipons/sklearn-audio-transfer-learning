@@ -38,7 +38,7 @@ In the following, we give some tips on how to build another audio classifier tha
 
 As an example on how to do it, let's download the ASC-TUT dataset ([dev-set](https://zenodo.org/record/400515#.W9n2UtGdZhE) / [eval-set](https://zenodo.org/record/1040168#.W9n2jNGdZhE)). With this data, you can build an acoustic scene classifier.
 
-Copy the audio into a new directory: `sklearn-audio-transfer-learning/data/audio/ASC-TUT/`. Now create your train/test partitions. These are just lists of the files that belong to this partition. For example, access to the your audio directory `sklearn-audio-transfer-learning/data/audio/ASC-TUT/dev-set/` and run `ls > train_set.txt`. Do the same for creating the test partition. Remember to configure the variables `audio_paths_train` and `audio_paths_test` (in `audio_transfer_learning.py`) with the new dataset/partitions.
+Copy the audio into a new directory: `sklearn-audio-transfer-learning/data/audio/ASC-TUT/`. Now create your train/test partitions. These are just lists of the files that belong to this partition. For example, access to your audio directory `sklearn-audio-transfer-learning/data/audio/ASC-TUT/dev-set/` and run `ls > train_set.txt`. Do the same for creating the test partition. Remember to configure the variables `audio_paths_train` and `audio_paths_test` (in `audio_transfer_learning.py`) with the new dataset/partitions.
 
 The last step is to define which is the label (or ground truth) of each of the audios. You can define the correspondence between the audio path and its label in the following function `path2gt_datasets(path, dataset)` in `sklearn-audio-transfer-learning/src/utils.py`.
 
