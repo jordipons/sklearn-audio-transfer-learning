@@ -10,7 +10,7 @@ This material is prepared to learn about Tensorflow, Scikit-learn, and deep lear
 ## Installation:
 Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
 
-#### Download the pre-trained models:
+Download the pre-trained models you want to use as feature extractors:
 
 - **VGGish:** download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`. For more details, check out their [documentation](https://github.com/tensorflow/models/tree/master/research/audioset).
 - **OpenL3:** download it via pip `pip install --timeout 100000000 openl3 `. Use a large timeout, because it takes some time to download the model. For more details, check out their [documentation](https://github.com/marl/openl3).
