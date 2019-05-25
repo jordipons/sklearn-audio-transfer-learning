@@ -1,5 +1,5 @@
 # Audio Transfer Learning with Scikit-learn and Tensorflow
-We use the pre-trained Tensorflow models as audio feature extractors. These deep convolutional neural networks were trained with the [Audioset dataset](https://research.google.com/audioset/), that is conformed by 2M YouTube audios for the task of general audio tagging. Scikit-learn classifiers are employed to rapidly prototype competent audio classifiers that can be trained on a CPU.
+We use pre-trained Tensorflow models as audio feature extractors. These deep convolutional neural networks were pre-trained with the [Audioset dataset](https://research.google.com/audioset/), that is conformed by 2M YouTube audios for the task of general audio tagging. Scikit-learn classifiers are employed to rapidly prototype competent audio classifiers that can be trained on a CPU.
 
 See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) model:
 
@@ -12,8 +12,8 @@ Create a python3 virtual environment `python3 -m venv env`, activate it `source 
 
 #### Download the pre-trained models:
 
-- **VGGish:** download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`.
-- **OpenL3:** download it via pip `pip install --timeout 100000000 openl3 `. Use a large timeout, because it takes some time to download the model.
+- **VGGish:** download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`. For more details, check out their [documentation](https://github.com/tensorflow/models/tree/master/research/audioset).
+- **OpenL3:** download it via pip `pip install --timeout 100000000 openl3 `. Use a large timeout, because it takes some time to download the model. For more details, check out their [documentation](https://github.com/marl/openl3).
 
 ## Music genre classification: a toy example
 
