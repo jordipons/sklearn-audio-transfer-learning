@@ -68,7 +68,7 @@ When using the `openl3` feature extractor you will find that to solve your RAM i
 - `vggish_input.py`,`vggish_params.py`,`vggish_slim.py`,`mel_features.py`,`vggish_model.ckpt`: auxiliar scripts to employ the VGGish pre-trained model.
 
 ## Folders structure
-- `/src`: folder containing previously listed scripts.
+- `/src`: folder containing the previously listed scripts.
 - `/data`: where all intermediate files (pre-computed features, audio, results, etc.) will be stored. 
 - `/data/index/`: indexed files containing ground truth annotations and partitions.
 - `/data/audio/`: folder where to store the audio datasets.
