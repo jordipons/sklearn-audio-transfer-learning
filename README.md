@@ -70,8 +70,8 @@ When using the `openl3` feature extractor you will find that to solve your RAM i
 ## Folders structure
 - `/src`: folder containing the previously listed scripts.
 - `/data`: where all intermediate files (pre-computed features, audio, results, etc.) will be stored. 
-- `/data/index/`: recommended folder where to store the indexed files containing ground truth annotations and partitions.
 - `/data/audio/`: recommended folder where to store the audio datasets.
+- `/data/index/`: recommended folder where to store the indexed files containing ground truth annotations and partitions.
 
 When running our scripts, the following folders will be created:
 - `./data/audio_representation/`: where the pre-computed features are stored.
