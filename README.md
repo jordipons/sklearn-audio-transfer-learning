@@ -60,7 +60,7 @@ To re-compute the features, just set `load_training_data` to False.
 
 Reduce the batch size by properlly setting `batch_size`. The batch size defines the ammount of audios that are processed at once. The smaller it is, the lower the consumption of RAM memory.
 
-When using the `openl3` feature extractor you will find out that to solve your RAM issues you will have to **increase** the batch size. We recommend to set it to 512. This is possibly due to a bug in the original Openl3 implementation.
+When using the `openl3` feature extractor you will find out that to solve your RAM issues you will have to **increase** the batch size. We recommend to set it to 256. This is possibly due to a bug in the original Openl3 implementation.
 
 ## Scripts directory
 - `audio_transfer_learning.py`: main script where we build the audio classifiers with Tensorflow and Scikit-learn.
