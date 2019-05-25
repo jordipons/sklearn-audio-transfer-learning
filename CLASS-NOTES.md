@@ -21,7 +21,7 @@ Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5
 - Discuss overfitting
 - Feature selection
 - Ensembles
-- tSNE of the data and features?
+- tSNE of the data and features
 
 Share your results in: https://docs.google.com/document/d/1oyqFCy9P-BD13b2FyWMkTdxbdWPfNRP6ATexqvbw4xA/edit
 
