@@ -13,14 +13,17 @@ For example, with this setup `MLPClassifier(hidden_layer_sizes=(20,), max_iter=6
 Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5, loss='log', learning_rate='optimal')` we get these scores: 75.51%, or 75.17%.
 
 #### Some ideas in how to improve your results:
-- Hyper-parameter search
 - Try different models
-- Feature selection
-- Dimensionality reduction
-- Ensembles
-- Discuss overfitting
+- Hyper-parameter search
+- Try different features
 - Visualize parts of the model
+- Dimensionality reduction
+- Discuss overfitting
+- Feature selection
+- Ensembles
 - tSNE of the data and features?
+
+Share your results in: https://docs.google.com/document/d/1oyqFCy9P-BD13b2FyWMkTdxbdWPfNRP6ATexqvbw4xA/edit
 
 #### Tips to deploy your best model: 
 - https://scikit-learn.org/stable/modules/model_persistence.html
