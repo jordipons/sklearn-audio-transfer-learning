@@ -2,7 +2,7 @@
 
 Clone this Github repository: `git clone https://github.com/jordipons/sklearn-audio-transfer-learning.git`.
 
-Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
+After cloning, access to the repository to build a virtual environment: `cd sklearn-audio-transfer-learning/`. Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
 
 Run the main python script: `cd src/`, and `python audio_transfer_learning.py`.
 
