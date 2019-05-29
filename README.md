@@ -55,12 +55,6 @@ You can easily set your favourite sklearn classifier in `define_classification_m
 Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `evaluation_data_GTZAN_vggish.npz`).
 
 To re-compute the features, just set `load_training_data` to False.
-    
-#### Does the script consumes too much RAM memory?
-
-Reduce the batch size by properlly setting `batch_size`. The batch size defines the ammount of audios that are processed at once. The smaller it is, the lower the consumption of RAM memory.
-
-When using the `openl3` feature extractor you will find that to solve your RAM issues you have to **increase** the batch size. We recommend to set it to 256. This is possibly due to a bug in the original Openl3 implementation.
 
 ## Scripts directory
 - `audio_transfer_learning.py`: main script where we build the audio classifiers with Tensorflow and Scikit-learn.
