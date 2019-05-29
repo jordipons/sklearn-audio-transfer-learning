@@ -67,6 +67,6 @@ To re-compute the features, just set `load_training_data` to False.
 - `/data/audio/`: recommended folder where to store the audio datasets.
 - `/data/index/`: recommended folder where to store the indexed files containing ground truth annotations and partitions.
 
-When running our scripts, the following folders will be created:
+When running these scripts, the following folders will be created:
 - `./data/audio_representation/`: where the pre-computed features are stored.
 - `./data/experiments/`: where the results of the experiments are stored.
