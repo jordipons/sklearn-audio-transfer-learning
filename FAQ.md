@@ -1,6 +1,6 @@
-**Can I run it in collab?**
+**Can I run it in Colab?**
 
-Yes, see a rudimentary example [here](https://colab.research.google.com/drive/194wo-G5fCZmqIFt0BDXZcpDpdlbU9Yns). If you are a colab ninja and want your example to appear here, please ping us!
+Yes, see a rudimentary example [here](https://colab.research.google.com/drive/194wo-G5fCZmqIFt0BDXZcpDpdlbU9Yns). If you are a Colab ninja and want your example to appear here, please ping us!
 
 **I get an error related to `tkinter` when installing the requirements. What shall I do?**
 
