@@ -5,7 +5,7 @@ See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tr
 
 <p align="center"><img src="sklearn-audio-transfer-learning.png"  height="65"></p>
 
-This material was prepared to learn about Tensorflow, Scikit-learn, and deep learning in general. Besides, due to the simplicity of Scikit-learn, this toolkit can be employed to easily build proof-of-concept models with your own data.
+This material was prepared to teach Tensorflow, Scikit-learn, and deep learning in general. Besides, due to the simplicity of Scikit-learn, this toolkit can be employed to easily build proof-of-concept models with your own data.
 
 ## Installation:
 
