@@ -23,12 +23,12 @@ Download the pre-trained models you want to use as feature extractors. Our curre
 #### Set the task up
 As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/sound/genres.tar.gz` and extract the audio files `tar -zxvf genres.tar.gz` in `sklearn-audio-transfer-learning/data/audio/GTZAN/`. Approximated download time: between 30 min and an hour. We already provide (fault-filtered) train/test partitions in `sklearn-audio-transfer-learning/data/index/GTZAN/`.
 
-`audio_transfer_learning.py` is the main python file. Note that on its top-20 lines you can configure it. For example: you can select *(i)* which sklearn classifier to employ, and *(ii)* which pre-trained model to use for extracting features.  You can easily set your favourite sklearn classifier in `define_classification_model()`. To start, let's select `linearSVM`. We set it as follows: `LinearSVC(C=1)`. And finally, you need to select which pre-trained Tensorflow model you want to use as feature extactor. To start, let's use the `vggish`. Remember to download the pre-trained model first!
+`audio_transfer_learning.py` is the main python file. Note that on its top-20 lines you can configure it. For example: you can select *(i)* which sklearn classifier to employ, and *(ii)* which pre-trained model to use for extracting features.  You can easily set your favourite sklearn classifier in `define_classification_model()`. To start, let's select `SVM`. We set it as follows: `SVC(C=1, kernel='rbf', gamma='scale')`. Additionally, we employ dimensionality reduction via setting `'pca': 128`. Finally, we select which pre-trained Tensorflow model to use as feature extactor. To start, let's use the `vggish`. Remember to download the pre-trained model first!
 
 #### Run your classifier
 Open the `sklearn-audio-transfer-learning/src/` directory in a terminal and run `python audio_transfer_learning.py`. Approximated run time in your laptop: 15 min.
 
-Congrats, you have build a music genre classifier! The model we developed (VGGish + SVM) achieved 77.24% accuracy in our test set. Interestingly, this basic model can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and is quite competent when compared to the best result we are aware of: [82.1% accuracy](https://www.mdpi.com/2076-3417/8/1/150).
+Congrats, you have build a music genre classifier! The model we developed (VGGish + 128 PCA + SVM) achieved 77.58% accuracy in our test set. Employing this same setup with `openl3` features, we achieve (VGGish + 128 PCA + SVM): 74.65% accuracy. Interestingly, these basic models can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and are quite competent when compared to the best result we are aware of: [82.1% accuracy](https://www.mdpi.com/2076-3417/8/1/150).
 
 #### Can you improve this result? 
 
