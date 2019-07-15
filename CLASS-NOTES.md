@@ -14,33 +14,29 @@ Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5
 
 #### With or without PCA? Overfitting?
 
-*[The following experiments employ Openl3 features]*  
+*The following experiments employ Openl3 features, and we only change the max_iter=?*
+*We employ the following setup: MLPClassifier(hidden_layer_sizes=(128,), max_iter=**?**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)*
 
-MLPClassifier(hidden_layer_sizes=(128,), max_iter=**10**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
-PCA: 72.06%                                      - NO PCA: 73.79 %
+max_iter=**10**  
+PCA: 72.06% / NO PCA: 73.79 %
 
-MLPClassifier(hidden_layer_sizes=(128,), max_iter=**50**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+max_iter=**50**  
 PCA: 75.17% / NO PCA: **76.55%**
 
-MLPClassifier(hidden_layer_sizes=(128,), max_iter=**100**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+max_iter=**100**  
 PCA: **77.24%** / NO PCA: 71.37%
 
-MLPClassifier(hidden_layer_sizes=(128,), max_iter=**300**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+max_iter=**300**  
 PCA: 75.17% / NO PCA: 74.48%
 
-MLPClassifier(hidden_layer_sizes=(128,), max_iter=**600**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+max_iter=**600**  
 PCA: 74.48% / NO PCA: 73.79 %
 
-MLPClassifier(hidden_layer_sizes=(128,), max_iter=**1000**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+max_iter=**1000**  
 PCA: 75.86% / NO PCA: 72.75 %  **(confusion matrix below)**
 
-(without PCA the model has more trainable parameters, and the model overfits before!)
+*Without PCA the model has more trainable parameters, and the model overfits before!*
 
 
 #### What are these numbers?  
