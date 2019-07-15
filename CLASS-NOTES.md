@@ -27,7 +27,7 @@ PCA: 75.17% / NO PCA: **76.55%**
 >
 >[max_iter=**100**] &rarr; 
 PCA: **77.24%** / NO PCA: 71.37%
-
+>
 >[max_iter=**300**] &rarr; 
 PCA: 75.17% / NO PCA: 74.48%
 >
