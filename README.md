@@ -8,6 +8,9 @@ See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tr
 This material is prepared to learn about Tensorflow, Scikit-learn, and deep learning in general. Besides, due to the simplicity of Scikit-learn, this toolkit can be employed to easily build proof-of-concept models with your own data.
 
 ## Installation:
+
+Clone this repository: `git clone https://github.com/jordipons/sklearn-audio-transfer-learning.git`.
+
 Create a python3 virtual environment `python3 -m venv env`, activate it `source ./env/bin/activate`, and install the dependencies `pip install -r requirements.txt`.
 
 Download the pre-trained models you want to use as feature extractors. Our current implementation supports:
