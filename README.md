@@ -55,7 +55,7 @@ You are ready to go!
 
 You can easily set your favourite sklearn classifier in `define_classification_model()`. Then, select one `model_type`. The following classifiers are already implemented: `linearSVM`, `SVM`, `perceptron`, `MLP`, and `kNN`. Check [Scikit-learn's documentation](https://scikit-learn.org/stable/) to know more about its possibilities.
     
-#### Does the script takes an eternity to extract the training features?
+#### Does the script takes an eternity to extract the features?
 
 Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `evaluation_data_GTZAN_vggish.npz`).
 
