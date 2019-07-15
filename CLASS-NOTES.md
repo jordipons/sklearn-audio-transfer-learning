@@ -14,42 +14,42 @@ Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5
 
 #### With or without PCA? Overfitting?
 
-*The following experiments employ Openl3 features, and we only change the max_iter=?*
-*We employ the following setup: MLPClassifier(hidden_layer_sizes=(128,), max_iter=**?**, verbose=10,
-               solver='sgd', learning_rate='constant', learning_rate_init=0.001)*
+The following experiments employ Openl3 features, and we only change the max_iter=?  
+We employ the following setup: MLPClassifier(hidden_layer_sizes=(128,), max_iter=**?**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)  
 
-max_iter=**10**  
+*max_iter=**10**  *
 PCA: 72.06% / NO PCA: 73.79 %
 
-max_iter=**50**  
+*max_iter=**50**  *
 PCA: 75.17% / NO PCA: **76.55%**
 
-max_iter=**100**  
+*max_iter=**100**  *
 PCA: **77.24%** / NO PCA: 71.37%
 
-max_iter=**300**  
+*max_iter=**300**  *
 PCA: 75.17% / NO PCA: 74.48%
 
-max_iter=**600**  
+*max_iter=**600**  *
 PCA: 74.48% / NO PCA: 73.79 %
 
-max_iter=**1000**  
+*max_iter=**1000**  *
 PCA: 75.86% / NO PCA: 72.75 %  **(confusion matrix below)**
 
-*Without PCA the model has more trainable parameters, and the model overfits before!*
+Without PCA the model has more trainable parameters, and the model overfits before!
 
 
 #### What are these numbers?  
-[[11  0  3  0  1 12  0  0  0  4]
- [ 0 31  0  0  0  0  0  0  0  0]
- [ 0  0 25  4  0  0  0  0  0  1]
- [ 0  0  0 24  3  0  0  1  1  0]
- [ 0  0  0  2 24  0  0  1  0  0]
- [ 1  0  0  0  0 21  0  1  0  4]
- [ 0  0  0  0  0  0 26  0  0  1]
- [ 0  0  0  2  1  0  0 27  0  0]
- [ 0  0  1  3  4  0  0  1 16  1]
- [ 1  0  5  7  3  1  2  4  3  6]]  
+[[11  0  3  0  1 12  0  0  0  4]  
+ [ 0 31  0  0  0  0  0  0  0  0]  
+ [ 0  0 25  4  0  0  0  0  0  1]  
+ [ 0  0  0 24  3  0  0  1  1  0]  
+ [ 0  0  0  2 24  0  0  1  0  0]  
+ [ 1  0  0  0  0 21  0  1  0  4]  
+ [ 0  0  0  0  0  0 26  0  0  1]  
+ [ 0  0  0  2  1  0  0 27  0  0]  
+ [ 0  0  1  3  4  0  0  1 16  1]  
+ [ 1  0  5  7  3  1  2  4  3  6]]    
  
 A confusion matrix!
 
