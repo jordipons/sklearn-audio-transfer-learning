@@ -25,7 +25,7 @@ As an example, let's download the GTZAN dataset `wget http://opihi.cs.uvic.ca/so
 
 `audio_transfer_learning.py` is the main python file. Note that on its top-20 lines you can configure it. For example: you can select *(i)* which sklearn classifier to employ, and *(ii)* which pre-trained model to use for extracting features.  
 
-You can easily set your favourite sklearn classifier in `define_classification_model()`. To start, let's select `SVM`. We set it as follows: `SVC(C=1, kernel='rbf', gamma='scale')`. Additionally, we employ dimensionality reduction via setting `'pca': 128`. Finally, we select which pre-trained Tensorflow model to use as feature extactor. To start, let's use the `vggish`. Remember to download the pre-trained model first!
+You can easily set your favourite sklearn classifier in `define_classification_model()`. To start, let's select `SVM`. We set it as follows: `SVC(C=1, kernel='rbf', gamma='scale')`. Additionally, we employ [PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html) dimensionality reduction via setting `'pca': 128`. Finally, we select which pre-trained Tensorflow model to use as feature extactor. To start, let's use the `vggish`. Remember to download the pre-trained model first!
 
 #### Run your classifier
 Open the `sklearn-audio-transfer-learning/src/` directory in a terminal and run `python audio_transfer_learning.py`.
