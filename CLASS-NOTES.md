@@ -12,6 +12,53 @@ For example, with this setup `MLPClassifier(hidden_layer_sizes=(20,), max_iter=6
 
 Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5, loss='log', learning_rate='optimal')` we get these scores: 75.51%, or 75.17%.
 
+#### With or without PCA? Overfitting?
+
+openl3  + MLPClassifier(hidden_layer_sizes=(128,), max_iter=**10**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+PCA: 72.06%                                      - NO PCA: 73.79 %
+
+openl3  + MLPClassifier(hidden_layer_sizes=(128,), max_iter=**50**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+PCA:  75.17%                                     - NO PCA: **76.55%**
+
+openl3  + MLPClassifier(hidden_layer_sizes=(128,), max_iter=**100**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+PCA:  **77.24%**                                    - NO PCA: 71.37%
+
+openl3  + MLPClassifier(hidden_layer_sizes=(128,), max_iter=**300**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+PCA:   75.17%                                - NO PCA: 74.48%
+
+openl3  + MLPClassifier(hidden_layer_sizes=(128,), max_iter=**600**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+PCA: 74.48%                                       - NOPCA: 73.79 %
+
+openl3  + MLPClassifier(hidden_layer_sizes=(128,), max_iter=**1000**, verbose=10,
+               solver='sgd', learning_rate='constant', learning_rate_init=0.001)
+PCA: 75.86%                                       - NO PCA: 72.75 %  (confusion matrix)
+
+(without PCA the model has more trainable parameters, and the model over-fits before)
+
+
+#### What are these numbers?  
+[[11  0  3  0  1 12  0  0  0  4]
+ [ 0 31  0  0  0  0  0  0  0  0]
+ [ 0  0 25  4  0  0  0  0  0  1]
+ [ 0  0  0 24  3  0  0  1  1  0]
+ [ 0  0  0  2 24  0  0  1  0  0]
+ [ 1  0  0  0  0 21  0  1  0  4]
+ [ 0  0  0  0  0  0 26  0  0  1]
+ [ 0  0  0  2  1  0  0 27  0  0]
+ [ 0  0  1  3  4  0  0  1 16  1]
+ [ 1  0  5  7  3  1  2  4  3  6]]  
+ 
+A confusion matrix!
+
+#### SVM or MLP or KNN? 
+What's working the best? What's faster? What's simpler to train?  
+Let's engage our students with these practical questions!
+
 #### Some ideas in how to improve your results:
 - Try different models
 - Hyper-parameter search
@@ -22,8 +69,6 @@ Or, as another example, with this setup `SGDClassifier(max_iter=600, verbose=0.5
 - Feature selection
 - Ensembles
 - tSNE of the data and features
-
-Share your results in: https://docs.google.com/document/d/1oyqFCy9P-BD13b2FyWMkTdxbdWPfNRP6ATexqvbw4xA/edit
 
 #### Tips to deploy your best model: 
 - https://scikit-learn.org/stable/modules/model_persistence.html
