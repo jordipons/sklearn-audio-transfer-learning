@@ -11,6 +11,7 @@ from sklearn.svm import SVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn import decomposition
 
 import vggish_input, vggish_slim, vggish_params, utils
 from utils import wavefile_to_waveform
@@ -30,7 +31,8 @@ config = {
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8, # set very big for openl3 (memory bug)
     'features_type': 'vggish', # 'vggish' or 'openl3'
-    'model_type': 'linearSVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
+    'pca': 128, # resulting number of dimensions to be reduced to (e.g., 128), or False to desactivate it
+    'model_type': 'SVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_vggish.npz'
     'load_training_data': 'training_data_GTZAN_vggish.npz', # False or 'training_data_GTZAN_vggish.npz', 
     'load_evaluation_data': 'evaluation_data_GTZAN_vggish.npz' # False or 'evaluation_data_GTZAN_vggish.npz'
@@ -178,16 +180,18 @@ if __name__ == '__main__':
     print(X.shape)
     print(Y.shape)
 
+    ### uncomment to vidualize the features
     #interval = range(0, len(X), int(len(X)/250))
     #print(interval)
     #utils.matrix_visualization(X[interval])
 
-    #from sklearn import decomposition
-    #pca = decomposition.PCA(n_components=128, whiten=True)
-    #pca.fit(X)
-    #X = pca.transform(X)
-    #print("Shape after PCA: ", X.shape)
+    if config['pca']: # for dimensionality reduction
+        pca = decomposition.PCA(n_components=config['pca'], whiten=True)
+        pca.fit(X)
+        X = pca.transform(X)
+        print("Shape after PCA: ", X.shape)
 
+    ### uncomment to vidualize the features
     #utils.matrix_visualization(X[interval])
 
     print('Fitting model..')
@@ -206,8 +210,9 @@ if __name__ == '__main__':
         [X, Y, IDS] = extract_features_wrapper(paths_test, path2gt_test, model=config['features_type'], 
                                                save_as='evaluation_data_{}_{}'.format(config['dataset'], config['features_type']))
 
-    #X = pca.transform(X)
-    #print("Shape after PCA: ", X.shape)
+    if config['pca']: # for dimensionality reduction
+        X = pca.transform(X)
+        print("Shape after PCA: ", X.shape)
 
     print('Predict labels on evaluation data')
     pred = model.predict(X)
@@ -232,5 +237,6 @@ if __name__ == '__main__':
     to.write('Accuracy: ' + str(acc))
     to.close()
     print(config)
+    print('Confusion matrix:')
     print(conf_matrix)    
     print('Accuracy: ' + str(acc))
