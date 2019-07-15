@@ -57,7 +57,7 @@ You can easily set your favourite sklearn classifier in `define_classification_m
     
 #### Does the script takes an eternity to extract the features?
 
-Once you have extracted the training features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `evaluation_data_GTZAN_vggish.npz`).
+Once you have extracted the features once, these are automatically stored in `sklearn-audio-transfer-learning/data/audio_representation/`. You can load those (instead of re-computing) by simply setting the variable `load_training_data` with the name of the file containing the pre-computed training features (e.g.: `evaluation_data_GTZAN_vggish.npz`).
 
 To re-compute the features, just set `load_training_data` to False.
 
