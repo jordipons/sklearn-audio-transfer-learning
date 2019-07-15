@@ -3,7 +3,7 @@ We use pre-trained Tensorflow models as audio feature extractors. Scikit-learn c
 
 See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) model:
 
-<p align="center"><img src="sklearn-audio-transfer-learning.png"  height="65"></p>
+<p align="center"><img src="sklearn-audio-transfer-learning.png"  height="62"></p>
 
 This material is prepared to learn about Tensorflow, Scikit-learn, and deep learning in general. Besides, due to the simplicity of Scikit-learn, this toolkit can be employed to easily build proof-of-concept models with your own data.
 
