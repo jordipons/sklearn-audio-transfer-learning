@@ -76,7 +76,7 @@ When running these scripts, the following folders will be created:
 - `./data/audio_representation/`: where the pre-computed features are stored.
 - `./data/experiments/`: where the results of the experiments are stored
 
-## Are you using musicnn?
+## Are you using sklearn-audio-transfer-learning?
 If you are using it for academic works, please cite us:
 ```
 @inproceedings{pons2018atscale,
