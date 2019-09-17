@@ -74,4 +74,26 @@ To re-compute the features, just set `load_training_data` to False.
 
 When running these scripts, the following folders will be created:
 - `./data/audio_representation/`: where the pre-computed features are stored.
-- `./data/experiments/`: where the results of the experiments are stored.
+- `./data/experiments/`: where the results of the experiments are stored
+
+## Are you using musicnn?
+If you are using it for academic works, please cite us:
+```
+@inproceedings{pons2018atscale,
+  title={End-to-end learning for music audio tagging at scale},
+  author={Pons, Jordi and Nieto, Oriol and Prockup, Matthew and Schmidt, Erik M. and Ehmann, Andreas F. and Serra, Xavier},
+  booktitle={19th International Society for Music Information Retrieval Conference (ISMIR2018)},
+  year={2018},
+}
+
+```
+```
+@inproceedings{pons2019musicnn,
+  title={musicnn: pre-trained convolutional neural networks for music audio tagging},
+  author={Pons, Jordi and Serra, Xavier},
+  booktitle={Late-breaking/demo session in 20th International Society for Music Information Retrieval Conference (LBD-ISMIR2019)},
+  year={2019},
+}
+
+```
+If you use it for other purposes, let us know!
