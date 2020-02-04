@@ -44,3 +44,4 @@ tqdm==4.31.1
 traitlets==4.3.2
 wcwidth==0.1.7
 Werkzeug==0.15.2
+musicnn==0.1.0 

@@ -31,16 +31,16 @@ DATA_FOLDER = '../data/'
 config = {
     'dataset': 'GTZAN',
     'num_classes_dataset': 10,
-    'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/,
+    'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/',
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8, # set very big for openl3 (memory bug)
     'features_type': 'musicnn', # 'vggish' or 'openl3' or 'musicnn'
-    'pca': False, # resulting number of dimensions to be reduced to (e.g., 128), or False to desactivate it
+    'pca': 128, # resulting number of dimensions to be reduced to (e.g., 128), or False to desactivate it
     'model_type': 'SVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_vggish.npz'
-    'load_training_data': False, # False or 'training_data_GTZAN_vggish.npz', 
-    'load_evaluation_data': False # False or 'evaluation_data_GTZAN_vggish.npz'
+    'load_training_data': 'training_data_GTZAN_MSDmusicnn_max_pool.npz', # False or 'training_data_GTZAN_vggish.npz', 
+    'load_evaluation_data': 'evaluation_data_GTZAN_MSDmusicnn_max_pool.npz' # False or 'evaluation_data_GTZAN_vggish.npz'
 }
 
 

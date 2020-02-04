@@ -36,3 +36,7 @@ env/
 !data/audio_representations/evaluation_data_GTZAN_vggish.npz
 !data/audio_representations/training_data_GTZAN_openl3.npz
 !data/audio_representations/evaluation_data_GTZAN_openl3.npz
+!data/audio_representations/training_data_GTZAN_MSDmusicnn_taggram.npz
+!data/audio_representations/evaluation_data_GTZAN_MSDmusicnn_taggram.npz
+!data/audio_representations/training_data_GTZAN_MSDmusicnn_max_pool.npz
+!data/audio_representations/evaluation_data_GTZAN_MSDmusicnn_max_pool.npz
