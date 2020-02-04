@@ -17,6 +17,7 @@ Download the pre-trained models you want to use as feature extractors. Our curre
 
 - **VGGish:** download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`. For more details, check out their [documentation](https://github.com/tensorflow/models/tree/master/research/audioset).
 - **OpenL3:** download it via pip `pip install --timeout 100000000 openl3 `. Use a large timeout, because it takes some time to download the model. For more details, check out their [documentation](https://github.com/marl/openl3).
+- **MusiCNN:** download it via pip `pip install musicnn`. For more details, chec out their [documentation](https://github.com/jordipons/musicnn).
 
 ## Music genre classification: a toy example
 
@@ -30,7 +31,7 @@ You can easily set your favourite sklearn classifier in `define_classification_m
 #### Run your classifier
 Open the `sklearn-audio-transfer-learning/src/` directory in a terminal and run `python audio_transfer_learning.py`.
 
-Congrats, you have build a music genre classifier! The model we developed (VGGish + 128 PCA + SVM) achieved 77.58% accuracy in our test set. Employing this same setup with `openl3` features, we achieve (Openl3 + 128 PCA + SVM): 74.65% accuracy. Interestingly, these basic models can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and are quite competent when compared to the best result we are aware of: [82.1% accuracy](https://www.mdpi.com/2076-3417/8/1/150).
+Congrats, you have build a music genre classifier! The model we developed (VGGish + 128 PCA + SVM) achieved 77.58% accuracy in our test set. Employing this same setup with `openl3` features, we achieve (Openl3 + 128 PCA + SVM): 74.65% accuracy -- and with `musicnn` (max_pool) features, we achieve (musicnn (max_pool) + 128 PCA + SVM): 77.24% accuracy. Interestingly, these basic models can achieve better results than a standard [MFCCs + SVM classifier (53.44%)](https://arxiv.org/abs/1805.00237), and are quite competent when compared to the best result we are aware of: [82.1% accuracy](https://www.mdpi.com/2076-3417/8/1/150).
 
 #### Can you improve this result? 
 
