@@ -1,7 +1,7 @@
 # Audio Transfer Learning with Scikit-learn and Tensorflow
 We use pre-trained Tensorflow models as audio feature extractors, and Scikit-learn classifiers are employed to rapidly prototype competent audio classifiers that can be trained on a CPU.
 
-See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) model (but note we also implemented [MusiCNN](https://github.com/jordipons/musicnn) and [Openl3](https://github.com/marl/openl3)):
+See the pipeline when using the [VGGish](https://github.com/tensorflow/models/tree/master/research/audioset) model (but note you can also use [MusiCNN](https://github.com/jordipons/musicnn) and [Openl3](https://github.com/marl/openl3)):
 
 <p align="center"><img src="sklearn-audio-transfer-learning.png"  height="65"></p>
 
