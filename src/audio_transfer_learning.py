@@ -21,21 +21,26 @@ try:
 except:
     print('Warning: you did not install openl3, you cannot use this feature extractor (but you can use the pre-computed features).')
 
+try:
+    from musicnn.extractor import extractor
+except:
+    print('Warning: you did not install MusiCNN, you cannot use this feature extractor (but you can use the pre-computed features).')
+
 
 DATA_FOLDER = '../data/'
 config = {
     'dataset': 'GTZAN',
     'num_classes_dataset': 10,
-    'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/',
+    'audio_folder': DATA_FOLDER + 'audio/GTZAN/genres/,
     'audio_paths_train': DATA_FOLDER + 'index/GTZAN/train_filtered.txt',
     'audio_paths_test': DATA_FOLDER + 'index/GTZAN/test_filtered.txt',
     'batch_size': 8, # set very big for openl3 (memory bug)
-    'features_type': 'vggish', # 'vggish' or 'openl3'
-    'pca': 128, # resulting number of dimensions to be reduced to (e.g., 128), or False to desactivate it
+    'features_type': 'musicnn', # 'vggish' or 'openl3' or 'musicnn'
+    'pca': False, # resulting number of dimensions to be reduced to (e.g., 128), or False to desactivate it
     'model_type': 'SVM', # 'linearSVM', 'SVM', 'perceptron', 'MLP', 'kNN'
     # Data: False to compute features or load pre-computed using e.g. 'training_data_GTZAN_vggish.npz'
-    'load_training_data': 'training_data_GTZAN_vggish.npz', # False or 'training_data_GTZAN_vggish.npz', 
-    'load_evaluation_data': 'evaluation_data_GTZAN_vggish.npz' # False or 'evaluation_data_GTZAN_vggish.npz'
+    'load_training_data': False, # False or 'training_data_GTZAN_vggish.npz', 
+    'load_evaluation_data': False # False or 'evaluation_data_GTZAN_vggish.npz'
 }
 
 
@@ -55,7 +60,7 @@ def define_classification_model():
                solver='sgd', learning_rate='constant', learning_rate_init=0.001)
 
     
-def extract_vggish_features(paths, path2gt): 
+def extract_vggish_features(paths, path2gt, model): 
     """Extracts VGGish features and their corresponding ground_truth and identifiers (the path).
 
        VGGish features are extracted from non-overlapping audio patches of 0.96 seconds, 
@@ -91,21 +96,31 @@ def extract_vggish_features(paths, path2gt):
     return [feature, ground_truth, identifiers]
 
 
-def extract_openl3_features(paths, path2gt):
-    """Extracts OpenL3 features and their corresponding ground_truth and identifiers (the path).
+def extract_other_features(paths, path2gt, model_type):
+    """Extracts MusiCNN or OpenL3 features and their corresponding ground_truth and identifiers (the path).
 
        OpenL3 features are extracted from non-overlapping audio patches of 1 second, 
        where each audio patch covers 128 mel bands.
 
+       MusiCNN features are extracted from non-overlapping audio patches of 1 second, 
+       where each audio patch covers 96 mel bands.
+
        We repeat ground_truth and identifiers to fit the number of extracted OpenL3 features.
     """
-    model = openl3.models.load_embedding_model(input_repr="mel128", 
-                                               content_type="music",
-                                               embedding_size=512)
+
+    if model_type == 'openl3':
+        model = openl3.models.load_embedding_model(input_repr="mel128", content_type="music", embedding_size=512)
+
     first_audio = True
     for p in paths:
-        wave, sr = wavefile_to_waveform(config['audio_folder'] + p, 'openl3')
-        emb, _ = openl3.get_embedding(wave, sr, hop_size=1, model=model, verbose=False)
+        if model_type == 'musicnn':
+            taggram, tags, extracted_features = extractor(config['audio_folder'] + p, model='MTT_vgg', extract_features=True, input_overlap=1)
+            emb = taggram # or choose any other layer, for example: emb = extracted_features['max_pool']
+            # Documentation: https://github.com/jordipons/musicnn/blob/master/DOCUMENTATION.md
+        elif model_type == 'openl3':
+            wave, sr = wavefile_to_waveform(config['audio_folder'] + p, 'openl3')
+            emb, _ = openl3.get_embedding(wave, sr, hop_size=1, model=model, verbose=False)
+
         if first_audio:
             features = emb
             ground_truth = np.repeat(path2gt[p], features.shape[0], axis=0)
@@ -122,22 +137,22 @@ def extract_openl3_features(paths, path2gt):
 
     
 def extract_features_wrapper(paths, path2gt, model='vggish', save_as=False):
-    """Wrapper function for extracting features (VGGish or OpenL3) per batch.
+    """Wrapper function for extracting features (MusiCNN, VGGish or OpenL3) per batch.
        If a save_as string argument is passed, the features wiil be saved in 
        the specified file.
     """
     if model == 'vggish':
         feature_extractor = extract_vggish_features
-    elif model == 'openl3':
-        feature_extractor = extract_openl3_features
+    elif model == 'openl3' or model == 'musicnn':
+        feature_extractor = extract_other_features
     else:
-        raise NotImplementedError('Current implementation only supports VGGish and OpenL3 features')
+        raise NotImplementedError('Current implementation only supports MusiCNN, VGGish and OpenL3 features')
 
     batch_size = config['batch_size']
     first_batch = True
     for batch_id in tqdm(range(ceil(len(paths)/batch_size))):
         batch_paths = paths[(batch_id)*batch_size:(batch_id+1)*batch_size]
-        [x, y, refs] = feature_extractor(batch_paths, path2gt)
+        [x, y, refs] = feature_extractor(batch_paths, path2gt, model)
         if first_batch:
             [X, Y, IDS] = [x, y, refs]
             first_batch = False
