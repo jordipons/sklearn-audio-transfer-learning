@@ -17,7 +17,7 @@ Download the pre-trained models you want to use as feature extractors. Our curre
 
 - **VGGish:** download the pre-trained model `wget https://storage.googleapis.com/audioset/vggish_model.ckpt` in `sklearn-audio-transfer-learning/src/`. For more details, check out their [documentation](https://github.com/tensorflow/models/tree/master/research/audioset).
 - **OpenL3:** download it via pip `pip install --timeout 100000000 openl3 `. Use a large timeout, because it takes some time to download the model. For more details, check out their [documentation](https://github.com/marl/openl3).
-- **MusiCNN:** download it via pip `pip install musicnn`. For more details, chec out their [documentation](https://github.com/jordipons/musicnn).
+- **MusiCNN:** download it via pip `pip install musicnn`. For more details, check out their [documentation](https://github.com/jordipons/musicnn).
 
 ## Music genre classification: a toy example
 
