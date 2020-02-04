@@ -114,8 +114,8 @@ def extract_other_features(paths, path2gt, model_type):
     first_audio = True
     for p in paths:
         if model_type == 'musicnn':
-            taggram, tags, extracted_features = extractor(config['audio_folder'] + p, model='MTT_vgg', extract_features=True, input_overlap=1)
-            emb = taggram # or choose any other layer, for example: emb = extracted_features['max_pool']
+            taggram, tags, extracted_features = extractor(config['audio_folder'] + p, model='MSD_musicnn', extract_features=True, input_overlap=1)
+            emb = extracted_features['max_pool'] # or choose any other layer, for example: emb = taggram
             # Documentation: https://github.com/jordipons/musicnn/blob/master/DOCUMENTATION.md
         elif model_type == 'openl3':
             wave, sr = wavefile_to_waveform(config['audio_folder'] + p, 'openl3')
