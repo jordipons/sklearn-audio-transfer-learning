@@ -235,8 +235,12 @@ if __name__ == '__main__':
     # agreggating same ID: majority voting
     y_pred = []
     y_true = []
+    extension = IDS[0].split('.')[-1] # find original extension
     for pt in paths_test:
-        y_pred.append(np.argmax(np.bincount(pred[np.where(IDS==pt)]))) # majority voting
+        tmp = pt.split('.')
+        tmp[-1] = extension
+        pt_extension = '.'.join(tmp) # fix extension
+        y_pred.append(np.argmax(np.bincount(pred[np.where(IDS==pt_extension)]))) # majority voting
         y_true.append(int(path2gt_test[pt]))
 
     # print and store the results
