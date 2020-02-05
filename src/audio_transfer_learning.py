@@ -14,7 +14,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn import decomposition
 
 import vggish_input, vggish_slim, vggish_params, utils
-from utils import wavefile_to_waveform
+from utils import audiofile_to_waveform
 
 try:
     import openl3
@@ -118,7 +118,7 @@ def extract_other_features(paths, path2gt, model_type):
             emb = extracted_features['max_pool'] # or choose any other layer, for example: emb = taggram
             # Documentation: https://github.com/jordipons/musicnn/blob/master/DOCUMENTATION.md
         elif model_type == 'openl3':
-            wave, sr = wavefile_to_waveform(config['audio_folder'] + p, 'openl3')
+            wave, sr = audiofile_to_waveform(config['audio_folder'] + p, 'openl3')
             emb, _ = openl3.get_embedding(wave, sr, hop_size=1, model=model, verbose=False)
 
         if first_audio:

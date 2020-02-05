@@ -21,7 +21,7 @@ from scipy.io import wavfile
 
 import mel_features
 import vggish_params
-from utils import wavefile_to_waveform
+from utils import audiofile_to_waveform
 
 
 def waveform_to_examples(data, sample_rate):
@@ -81,6 +81,6 @@ def wavfile_to_examples(wav_file):
   Returns:
     See waveform_to_examples.
   """
-  samples, sr = wavefile_to_waveform(wav_file, 'vggish')
+  samples, sr = audiofile_to_waveform(wav_file, "vggish")
 
   return waveform_to_examples(samples, sr)
