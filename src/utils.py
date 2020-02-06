@@ -1,4 +1,6 @@
 import os
+import warnings
+import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 import soundfile as sf
@@ -76,8 +78,11 @@ def matrix_visualization(matrix,title=None):
     plt.show()
 
 
-def wavefile_to_waveform(wav_file, features_type):
-    data, sr = sf.read(wav_file)
+def audiofile_to_waveform(audio_file, features_type):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        data, sr = librosa.load(audio_file)
+
     if features_type == 'vggish':
         tmp_name = str(int(np.random.rand(1)*1000000)) + '.wav'
         sf.write(tmp_name, data, sr, subtype='PCM_16')
